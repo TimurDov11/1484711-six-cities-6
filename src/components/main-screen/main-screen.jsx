@@ -1,6 +1,14 @@
 import React from 'react';
 import PlaceCard from '../place-card/place-card';
 
+const cards = [
+  <PlaceCard />,
+  <PlaceCard />,
+  <PlaceCard />,
+  <PlaceCard />,
+  <PlaceCard />
+];
+
 const MainScreen = () => {
 
   return (
@@ -87,11 +95,7 @@ const MainScreen = () => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
+                {cards.map((card, i) => <PlaceCard key={card + i} />)}
               </div>
             </section>
             <div className="cities__right-section">
