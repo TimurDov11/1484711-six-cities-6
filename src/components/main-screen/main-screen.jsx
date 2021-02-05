@@ -1,15 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
-const cards = [
-  <PlaceCard />,
-  <PlaceCard />,
-  <PlaceCard />,
-  <PlaceCard />,
-  <PlaceCard />
-];
+const MainScreen = (props) => {
+  const {offersCount} = props;
 
-const MainScreen = () => {
+  const cards = [];
+
+  for (let i = 0; i < offersCount; i++) {
+    cards.push(<PlaceCard />);
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -106,6 +106,10 @@ const MainScreen = () => {
       </main>
     </div>
   );
+};
+
+MainScreen.propTypes = {
+  offersCount: PropTypes.number.isRequired,
 };
 
 export default MainScreen;
