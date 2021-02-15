@@ -8,7 +8,7 @@ import PropertyScreen from '../property-screen/property-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const App = (props) => {
-  const {offersCount} = props;
+  const {offersCount, offers, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -35,6 +35,8 @@ const App = (props) => {
 
 App.propTypes = {
   offersCount: PropTypes.number.isRequired,
+  offers: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export default App;
