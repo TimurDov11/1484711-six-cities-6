@@ -32,7 +32,7 @@ export default [
     price: `320`,
     insideList: [`Washing machine`, `Towels`, `Coffee machine`, `Baby seat`, `Kitchen`, `Cabel TV`],
     host: {
-      src: `img/studio-01.jpg`,
+      src: `img/avatar-angelina.jpg`,
       name: `Linda`,
       isPro: true,
       id: `8`
