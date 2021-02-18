@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
 const MainScreen = (props) => {
-  const {offersCount} = props;
-
-  const cards = [];
-
-  for (let i = 0; i < offersCount; i++) {
-    cards.push(<PlaceCard />);
-  }
+  const {offers} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -95,7 +89,7 @@ const MainScreen = (props) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards.map((card, i) => <PlaceCard key={card + i} />)}
+                {offers.map((offer, i) => <PlaceCard key={offer + i} offer={offer} />)}
               </div>
             </section>
             <div className="cities__right-section">
@@ -109,7 +103,8 @@ const MainScreen = (props) => {
 };
 
 MainScreen.propTypes = {
-  offersCount: PropTypes.number.isRequired,
+  //  offersCount: PropTypes.number.isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
 export default MainScreen;
