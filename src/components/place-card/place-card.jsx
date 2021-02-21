@@ -4,10 +4,10 @@ import {HousingType, createStarsNumber} from '../../const';
 
 const PlaceCard = (props) => {
   const {offer} = props;
-  const {isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
+  const {id, isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" id={id}>
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
@@ -49,6 +49,7 @@ const PlaceCard = (props) => {
 
 PlaceCard.propTypes = {
   offer: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     isPremium: PropTypes.bool.isRequired,
     previewPhoto: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
