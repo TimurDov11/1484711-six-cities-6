@@ -9,6 +9,9 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const App = (props) => {
   const {offers} = props;
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteCities = favoriteOffers.map((favoriteOffer) => favoriteOffer.city.name);
+  const uniqueFavoriteCities = Array.from(new Set(favoriteCities));
 
   return (
     <BrowserRouter>
@@ -22,7 +25,10 @@ const App = (props) => {
           <LoginScreen />
         </Route>
         <Route exact path="/favorites">
-          <FavoritesScreen />
+          <FavoritesScreen
+            favoriteOffers={favoriteOffers}
+            uniqueFavoriteCities={uniqueFavoriteCities}
+          />
         </Route>
         <Route exact path="/offer/:id">
           <PropertyScreen />
