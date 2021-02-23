@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 const ReviewsForm = () => {
   const [, setReviewsFormText] = useState(``);
-  const [rating, setReviewsFormRating] = useState(``);
+  const [, setReviewsFormRating] = useState(``);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
