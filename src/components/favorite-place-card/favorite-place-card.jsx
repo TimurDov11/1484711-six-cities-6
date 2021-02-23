@@ -5,7 +5,7 @@ import {HousingType, createStarsNumber} from '../../const';
 
 const FavoritePlaceCard = (props) => {
   const {cityFavoriteOffer} = props;
-  const {previewPhoto, price, isFavorite, rating, title, type} = cityFavoriteOffer;
+  const {id, previewPhoto, price, isFavorite, rating, title, type} = cityFavoriteOffer;
 
   return (
     <article className="favorites__card place-card">
@@ -34,7 +34,7 @@ const FavoritePlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/offer/:id">{title}</Link>
+          <Link to={`offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{HousingType[type]}</p>
       </div>
@@ -44,6 +44,7 @@ const FavoritePlaceCard = (props) => {
 
 FavoritePlaceCard.propTypes = {
   cityFavoriteOffer: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     previewPhoto: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     isFavorite: PropTypes.bool.isRequired,
