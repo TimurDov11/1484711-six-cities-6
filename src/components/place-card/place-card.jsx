@@ -1,10 +1,13 @@
 import React from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {HousingType, createStarsNumber} from '../../const';
 
 const PlaceCard = (props) => {
   const {offer, setActiveCardId} = props;
   const {id, isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
+
+  const history = useHistory();
 
   return (
     <article className="cities__place-card place-card"
@@ -29,7 +32,7 @@ const PlaceCard = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`${isFavorite ? `place-card__bookmark-button place-card__bookmark-button--active button` : `place-card__bookmark-button button`}`} type="button">
+          <button className={`${isFavorite ? `place-card__bookmark-button place-card__bookmark-button--active button` : `place-card__bookmark-button button`}`} type="button" onClick={() => history.push(`/login`)}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -43,7 +46,7 @@ const PlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to="/offer/:{id}">{title}</Link>
         </h2>
         <p className="place-card__type">{HousingType[type]}</p>
       </div>
