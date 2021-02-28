@@ -2,7 +2,12 @@ export default [
   {
     id: 1,
     city: {
-      name: `Paris`
+      name: `Amsterdam`,
+      location: {
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 10
+      }
     },
     photos: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     title: `Beautiful & luxurious apartment at great location`,
@@ -21,11 +26,21 @@ export default [
       id: 1
     },
     isFavorite: true,
-    previewPhoto: `img/room.jpg`
+    previewPhoto: `img/room.jpg`,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 4
+    }
   }, {
     id: 2,
     city: {
-      name: `Amsterdam`
+      name: `Amsterdam`,
+      location: {
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 10
+      }
     },
     photos: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     title: `Nice, cozy, warm big bed apartment`,
@@ -44,11 +59,21 @@ export default [
       id: 8
     },
     isFavorite: true,
-    previewPhoto: `img/room.jpg`
+    previewPhoto: `img/room.jpg`,
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 4
+    }
   }, {
     id: 3,
     city: {
-      name: `Hamburg`
+      name: `Amsterdam`,
+      location: {
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 10
+      }
     },
     photos: [`img/room.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
     title: `Beautiful & luxurious house at great location`,
@@ -67,11 +92,21 @@ export default [
       id: 5
     },
     isFavorite: true,
-    previewPhoto: `img/apartment-03.jpg`
+    previewPhoto: `img/apartment-03.jpg`,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 4
+    }
   }, {
     id: 4,
     city: {
-      name: `Amsterdam`
+      name: `Amsterdam`,
+      location: {
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 10
+      }
     },
     photos: [`img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/apartment-01.jpg`],
     title: `Beautiful & luxurious hotel at great location`,
@@ -90,6 +125,11 @@ export default [
       id: 2
     },
     isFavorite: true,
-    previewPhoto: `img/apartment-01.jpg`
+    previewPhoto: `img/apartment-01.jpg`,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 4
+    }
   }
 ];
