@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {HousingType, createStarsNumber} from '../../const';
+import placeCardProp from './place-card.prop';
 
 const PlaceCard = (props) => {
   const {offer, setActiveCardId} = props;
@@ -55,16 +56,7 @@ const PlaceCard = (props) => {
 };
 
 PlaceCard.propTypes = {
-  offer: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    previewPhoto: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }).isRequired,
+  offer: placeCardProp,
   setActiveCardId: PropTypes.func.isRequired,
 };
 

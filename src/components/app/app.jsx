@@ -8,7 +8,7 @@ import PropertyScreen from '../property-screen/property-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const App = (props) => {
-  const {offers} = props;
+  const {offers, reviews} = props;
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const favoriteCities = favoriteOffers.map((favoriteOffer) => favoriteOffer.city.name);
   const uniqueFavoriteCities = Array.from(new Set(favoriteCities));
@@ -31,7 +31,9 @@ const App = (props) => {
           />
         </Route>
         <Route exact path="/offer/:id">
-          <PropertyScreen />
+          <PropertyScreen
+            reviews={reviews}
+          />
         </Route>
         <Route>
           <NotFoundScreen />
@@ -43,7 +45,7 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.array.isRequired,
-  //  reviews: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export default App;

@@ -12,7 +12,7 @@ export default [
     }
   }, {
     id: `2`,
-    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    comment: `A quiet cozy and picturesque that hides behind a a river. The building is green.`,
     date: `March 2019`,
     rating: `5`,
     user: {
