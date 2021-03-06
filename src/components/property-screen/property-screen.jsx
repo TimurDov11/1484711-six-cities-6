@@ -3,9 +3,14 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewsForm from '../reviews-form/reviews-form';
 import ReviewsList from '../reviews-list/reviews-list';
+import {MAX_REVIEWS_NUMBER, sortReviewsDate} from '../../const';
 
 const PropertyScreen = (props) => {
   const {reviews} = props;
+
+  const sortedDateReviews = reviews.sort(sortReviewsDate);
+  const shownReviews = sortedDateReviews.slice(0, MAX_REVIEWS_NUMBER);
+  const shownReviewsNumber = shownReviews.length;
 
   return (
     <div className="page">
@@ -149,8 +154,8 @@ const PropertyScreen = (props) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ReviewsList reviews={reviews} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{shownReviewsNumber}</span></h2>
+                <ReviewsList reviews={shownReviews} />
                 <ReviewsForm />
               </section>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStarsNumber} from '../../const';
+import {createStarsNumber, getDateTime, getDate} from '../../const';
 import reviewsItemProp from './reviews-item.prop';
 
 const ReviewsItem = (props) => {
@@ -26,7 +26,7 @@ const ReviewsItem = (props) => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime={`${getDateTime(date)}`}>{`${getDate(date)}`}</time>
       </div>
     </li>
   );
