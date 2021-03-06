@@ -32,6 +32,7 @@ const App = (props) => {
         </Route>
         <Route exact path="/offer/:id">
           <PropertyScreen
+            offers={offers}
             reviews={reviews}
           />
         </Route>

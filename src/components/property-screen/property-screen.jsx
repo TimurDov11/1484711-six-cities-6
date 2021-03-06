@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewsForm from '../reviews-form/reviews-form';
 import ReviewsList from '../reviews-list/reviews-list';
-import {MAX_REVIEWS_NUMBER, sortReviewsDate} from '../../const';
+import Map from '../map/map';
+import {MAX_REVIEWS_NUMBER, NEARBY_OFFERS_NUMBER, sortReviewsDate} from '../../const';
 
 const PropertyScreen = (props) => {
-  const {reviews} = props;
+  const {offers, reviews} = props;
 
+  const nearbyOffers = offers.slice(0, NEARBY_OFFERS_NUMBER);
   const sortedDateReviews = reviews.sort(sortReviewsDate);
   const shownReviews = sortedDateReviews.slice(0, MAX_REVIEWS_NUMBER);
   const shownReviewsNumber = shownReviews.length;
@@ -160,7 +162,7 @@ const PropertyScreen = (props) => {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map"><Map offers={nearbyOffers} /></section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -270,6 +272,7 @@ const PropertyScreen = (props) => {
 };
 
 PropertyScreen.propTypes = {
+  offers: PropTypes.array.isRequired,
   reviews: PropTypes.array.isRequired,
 };
 

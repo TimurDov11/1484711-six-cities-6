@@ -1,5 +1,7 @@
 export const MAX_REVIEWS_NUMBER = 2;
 
+export const NEARBY_OFFERS_NUMBER = 3;
+
 export const HousingType = {
   apartment: `Apartment`,
   room: `Private Room`,
