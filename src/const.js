@@ -3,10 +3,10 @@ export const MAX_REVIEWS_NUMBER = 2;
 export const NEARBY_OFFERS_NUMBER = 3;
 
 export const HousingType = {
-  apartment: `Apartment`,
-  room: `Private Room`,
-  house: `House`,
-  hotel: `Hotel`,
+  APARTMENT: `Apartment`,
+  ROOM: `Private Room`,
+  HOUSE: `House`,
+  HOTEL: `Hotel`,
 };
 
 export const createStarsNumber = (rating) => {
