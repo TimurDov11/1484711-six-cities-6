@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
 const PlacesList = (props) => {
-  const [, setActiveCardId] = useState(``);
-  const {offers} = props;
+  const {className, cardName, offers} = props;
 
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} setActiveCardId={setActiveCardId} />)}
+    <div className={`${className} places__list`}>
+      {offers.map((offer) => <PlaceCard key={offer.id} cardName={cardName} offer={offer} />)}
     </div>
   );
 };
 
 PlacesList.propTypes = {
+  className: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   offers: PropTypes.array.isRequired,
 };
 
