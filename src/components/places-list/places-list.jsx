@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PlaceCard from '../place-card/place-card';
 
 const PlacesList = (props) => {
-  const {className} = props;
+  const {className, cardName, offers} = props;
 
   return (
-    <div className={`places__list ${className}`}>
-      {props.children}
+    <div className={`${className} places__list`}>
+      {offers.map((offer) => <PlaceCard key={offer.id} cardName={cardName} offer={offer} />)}
     </div>
   );
 };
 
 PlacesList.propTypes = {
   className: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
+  cardName: PropTypes.string.isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
 export default PlacesList;

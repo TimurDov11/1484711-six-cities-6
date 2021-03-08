@@ -9,6 +9,11 @@ export const HousingType = {
   HOTEL: `Hotel`,
 };
 
+export const CardName = {
+  CITIES: `CITIES`,
+  NEARPLACES: `NEARPLACES`,
+};
+
 export const createStarsNumber = (rating) => {
   return Math.round(rating) * 100 / 5;
 };

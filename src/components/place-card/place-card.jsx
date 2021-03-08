@@ -1,24 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {HousingType, createStarsNumber} from '../../const';
+import {HousingType, CardName, createStarsNumber} from '../../const';
 import placeCardProp from './place-card.prop';
 
 const PlaceCard = (props) => {
-  const {className, offer} = props;
+  const [, setActiveCardId] = useState(``);
+  const {cardName, offer} = props;
   const {id, isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
+
+  const CardSettings = {
+    [CardName.CITIES]: {
+      cardClass: `cities__place-card`,
+      cardInfoClass: `cities__image-wrapper`,
+    },
+    [CardName.NEARPLACES]: {
+      cardClass: `near-places__card`,
+      cardInfoClass: `near-places__image-wrapper`,
+    },
+  };
 
   const history = useHistory();
 
   return (
-    <>
+    <article className={`${CardSettings[cardName].cardClass} place-card`}
+      onMouseOver={() => {
+        setActiveCardId(id);
+      }}
+    >
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
         : ``
       }
-      <div className={`${className} place-card__image-wrapper`}>
+      <div className={`${CardSettings[cardName].cardInfoClass} place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src={previewPhoto} width="260" height="200" alt="Place image" />
         </a>
@@ -47,12 +63,12 @@ const PlaceCard = (props) => {
         </h2>
         <p className="place-card__type">{HousingType[type]}</p>
       </div>
-    </>
+    </article>
   );
 };
 
 PlaceCard.propTypes = {
-  className: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   offer: placeCardProp,
 };
 

@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewsForm from '../reviews-form/reviews-form';
 import ReviewsList from '../reviews-list/reviews-list';
-import NearPlacesList from '../near-places-list/near-places-list';
+import PlacesList from '../places-list/places-list';
+import {CardName} from '../../const';
 import Map from '../map/map';
 import {MAX_REVIEWS_NUMBER, NEARBY_OFFERS_NUMBER, sortReviewsDate} from '../../const';
 
@@ -168,7 +169,7 @@ const PropertyScreen = (props) => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearPlacesList offers={nearbyOffers} />
+            <PlacesList cardName={CardName.NEARPLACES} className={`near-places__list`} offers={nearbyOffers} />
           </section>
         </div>
       </main>
