@@ -3,7 +3,7 @@ import {CITIES} from '../const';
 import offers from '../mocks/offers';
 
 const initialState = {
-  city: CITIES.AMSTERDAM,
+  city: CITIES.PARIS,
   offers,
 };
 
@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
 
     default:
       return state;
-  };
+  }
 };
 
 
