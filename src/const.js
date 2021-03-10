@@ -2,6 +2,15 @@ export const MAX_REVIEWS_NUMBER = 2;
 
 export const NEARBY_OFFERS_NUMBER = 3;
 
+export const CITIES = {
+  PARIS: `Paris`,
+  COLOGNE: `Cologne`,
+  BRUSSELS: `Brussels`,
+  AMSTERDAM: `Amsterdam`,
+  HAMBURG: `Hamburg`,
+  DUSSELDORF: `Dusseldorf`,
+};
+
 export const HousingType = {
   APARTMENT: `Apartment`,
   ROOM: `Private Room`,
