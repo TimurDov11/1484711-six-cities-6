@@ -18,7 +18,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.FILL_OFFERS:
       return {
         ...state,
-        offers: action.payload
+        offers: offers.filter((offer) => offer.city.name === action.payload)
       };
 
     default:

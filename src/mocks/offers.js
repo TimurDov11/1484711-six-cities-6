@@ -2,9 +2,9 @@ export default [
   {
     id: 1,
     city: {
-      name: `Amsterdam`,
+      name: `Paris`,
       location: {
-        latitude: 52.38333,
+        latitude: 50.38333,
         longitude: 4.9,
         zoom: 10
       }
@@ -28,16 +28,16 @@ export default [
     isFavorite: true,
     previewPhoto: `img/room.jpg`,
     location: {
-      latitude: 52.3909553943508,
+      latitude: 50.3909553943508,
       longitude: 4.85309666406198,
       zoom: 4
     }
   }, {
     id: 2,
     city: {
-      name: `Amsterdam`,
+      name: `Paris`,
       location: {
-        latitude: 52.38333,
+        latitude: 50.38333,
         longitude: 4.9,
         zoom: 10
       }
@@ -61,7 +61,7 @@ export default [
     isFavorite: true,
     previewPhoto: `img/room.jpg`,
     location: {
-      latitude: 52.369553943508,
+      latitude: 50.369553943508,
       longitude: 4.85309666406198,
       zoom: 4
     }
@@ -101,9 +101,9 @@ export default [
   }, {
     id: 4,
     city: {
-      name: `Amsterdam`,
+      name: `Paris`,
       location: {
-        latitude: 52.38333,
+        latitude: 50.38333,
         longitude: 4.9,
         zoom: 10
       }
@@ -127,7 +127,7 @@ export default [
     isFavorite: true,
     previewPhoto: `img/apartment-01.jpg`,
     location: {
-      latitude: 52.3809553943508,
+      latitude: 50.3809553943508,
       longitude: 4.939309666406198,
       zoom: 4
     }
