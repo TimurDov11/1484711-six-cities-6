@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
 
 const Map = (props) => {
-  const {offers} = props;
+  const {offers, activeCardId} = props;
   const [offerOne] = offers;
 
   const mapRef = useRef();
@@ -25,26 +25,34 @@ const Map = (props) => {
       })
       .addTo(mapRef.current);
 
-    offers.forEach((offer) => {
-      const icon = leaflet.icon({
-        iconUrl: `./img/pin.svg`,
-        iconSize: [30, 30]
-      });
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [offers]);
 
+  useEffect(() => {
+    const icon = leaflet.icon({
+      iconUrl: `./img/pin.svg`,
+      iconSize: [30, 30]
+    });
+
+    const activeIcon = leaflet.icon({
+      iconUrl: `./img/pin-active.svg`,
+      iconSize: [30, 30]
+    });
+
+    offers.forEach((offer) => {
       leaflet.marker({
         lat: offer.location.latitude,
         lng: offer.location.longitude
       },
       {
-        icon
+        icon: offer.id === activeCardId ? activeIcon : icon
       })
       .addTo(mapRef.current);
     });
 
-    return () => {
-      mapRef.current.remove();
-    };
-  }, [offers]);
+  }, [offers, activeCardId]);
 
   return (
     <div id="map" style={{height: `100%`}} ref={mapRef}></div>
@@ -53,6 +61,11 @@ const Map = (props) => {
 
 Map.propTypes = {
   offers: PropTypes.array.isRequired,
+  activeCardId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.instanceOf(`null`),
+  ]).isRequired,
 };
 
 export default Map;

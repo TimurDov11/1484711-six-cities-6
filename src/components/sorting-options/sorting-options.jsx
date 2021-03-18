@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import {SORTING_OPTIONS} from '../../const';
 
 const SortingOptions = (props) => {
-  const {option, onOptionClick} = props;
+  const {option, onOptionClick, isOptionsOpened, onOptionsFormClick} = props;
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <form className="places__sorting" action="#" method="get"
+      onClick={(evt) => {
+        evt.preventDefault();
+        onOptionsFormClick();
+      }}
+    >
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex="0">
         {option}
@@ -14,7 +19,7 @@ const SortingOptions = (props) => {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened">
+      <ul className={`places__options places__options--custom ${isOptionsOpened ? `places__options--opened` : ``}`}>
         {Object.values(SORTING_OPTIONS).map((optionName) => {
           return (
             <li key={optionName} className={`places__option ${option === optionName && `places__option--active`}`} tabIndex="0"
@@ -35,6 +40,8 @@ const SortingOptions = (props) => {
 SortingOptions.propTypes = {
   option: PropTypes.string.isRequired,
   onOptionClick: PropTypes.func.isRequired,
+  isOptionsOpened: PropTypes.bool.isRequired,
+  onOptionsFormClick: PropTypes.func.isRequired,
 };
 
 export default SortingOptions;

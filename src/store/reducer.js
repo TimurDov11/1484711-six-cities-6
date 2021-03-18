@@ -6,6 +6,7 @@ const initialState = {
   city: CITIES.PARIS,
   offers,
   option: SORTING_OPTIONS.POPULAR,
+  isOptionsOpened: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,7 +23,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         option: action.payload,
-        offers: sortCards(action.payload, offers)
+        offers: sortCards(action.payload, offers),
+      };
+
+    case ActionType.TOGGLE_OPTIONS_POPUP:
+      return {
+        ...state,
+        isOptionsOpened: !state.isOptionsOpened
       };
 
     case ActionType.FILL_OFFERS:

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {changeCity, changeOption} from '../../store/action';
+import {ActionCreator} from '../../store/action';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SortingOptions from '../sorting-options/sorting-options';
@@ -10,7 +10,8 @@ import {CardName} from '../../const';
 import Map from '../map/map';
 
 const MainScreen = (props) => {
-  const {city, offers, option, onCityClick, onOptionClick} = props;
+  const [activeCardId, setActiveCardId] = useState(``);
+  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick} = props;
 
   const offersNumber = offers.length;
 
@@ -51,11 +52,11 @@ const MainScreen = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersNumber} places to stay in {city}</b>
-              {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} />}
-              <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} />
+              {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} isOptionsOpened={isOptionsOpened} onOptionsFormClick={onOptionsFormClick} />}
+              <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} setActiveCardId={setActiveCardId} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">{offers.length > 0 && <Map offers={offers} />}</section>
+              <section className="cities__map map">{offersNumber > 0 && <Map offers={offers} activeCardId={activeCardId} />}</section>
             </div>
           </div>
         </div>
@@ -68,23 +69,29 @@ MainScreen.propTypes = {
   city: PropTypes.string.isRequired,
   offers: PropTypes.array.isRequired,
   option: PropTypes.string.isRequired,
+  isOptionsOpened: PropTypes.bool.isRequired,
   onCityClick: PropTypes.func.isRequired,
   onOptionClick: PropTypes.func.isRequired,
+  onOptionsFormClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers.filter((offer) => offer.city.name === state.city),
   option: state.option,
+  isOptionsOpened: state.isOptionsOpened,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityClick(city) {
-    dispatch(changeCity(city));
+    dispatch(ActionCreator.changeCity(city));
   },
   onOptionClick(option) {
-    dispatch(changeOption(option));
+    dispatch(ActionCreator.changeOption(option));
   },
+  onOptionsFormClick() {
+    dispatch(ActionCreator.toggleOptionsPopup());
+  }
 });
 
 export {MainScreen};
