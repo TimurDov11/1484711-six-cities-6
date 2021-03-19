@@ -28,7 +28,7 @@ const PlaceCard = (props) => {
       }}
 
       onMouseOut={() => {
-        setActiveCardId(null);
+        setActiveCardId(``);
       }}
     >
       {isPremium ?

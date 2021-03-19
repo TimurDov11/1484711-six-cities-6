@@ -28,9 +28,19 @@ const Map = (props) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [offers]);
+  }, []);
 
   useEffect(() => {
+    const iconsGroup = leaflet.layerGroup().addTo(mapRef.current);
+
+    mapRef.current.setView(
+        {
+          lat: offerOne.city.location.latitude,
+          lng: offerOne.city.location.longitude
+        },
+        offerOne.city.location.zoom
+    );
+
     const icon = leaflet.icon({
       iconUrl: `./img/pin.svg`,
       iconSize: [30, 30]
@@ -49,8 +59,12 @@ const Map = (props) => {
       {
         icon: offer.id === activeCardId ? activeIcon : icon
       })
-      .addTo(mapRef.current);
+      .addTo(iconsGroup);
     });
+
+    return () => {
+      iconsGroup.clearLayers();
+    };
 
   }, [offers, activeCardId]);
 
@@ -64,7 +78,6 @@ Map.propTypes = {
   activeCardId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.instanceOf(`null`),
   ]).isRequired,
 };
 
