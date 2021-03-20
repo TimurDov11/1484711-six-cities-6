@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {changeCity} from '../../store/action';
+import {ActionCreator} from '../../store/action';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import SortingOptions from '../sorting-options/sorting-options';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList from '../places-list/places-list';
 import {CardName} from '../../const';
 import Map from '../map/map';
 
 const MainScreen = (props) => {
-  const {city, offers, onCityClick} = props;
+  const [activeCardId, setActiveCardId] = useState(``);
+  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick} = props;
 
   const offersNumber = offers.length;
 
@@ -50,25 +52,11 @@ const MainScreen = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersNumber} places to stay in {city}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-              </form>
-              <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} />
+              {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} isOptionsOpened={isOptionsOpened} onOptionsFormClick={onOptionsFormClick} />}
+              <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} setActiveCardId={setActiveCardId} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map offers={offers} /></section>
+              <section className="cities__map map">{offersNumber > 0 && <Map offers={offers} activeCardId={activeCardId} />}</section>
             </div>
           </div>
         </div>
@@ -80,18 +68,30 @@ const MainScreen = (props) => {
 MainScreen.propTypes = {
   city: PropTypes.string.isRequired,
   offers: PropTypes.array.isRequired,
+  option: PropTypes.string.isRequired,
+  isOptionsOpened: PropTypes.bool.isRequired,
   onCityClick: PropTypes.func.isRequired,
+  onOptionClick: PropTypes.func.isRequired,
+  onOptionsFormClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers.filter((offer) => offer.city.name === state.city),
+  option: state.option,
+  isOptionsOpened: state.isOptionsOpened,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityClick(city) {
-    dispatch(changeCity(city));
+    dispatch(ActionCreator.changeCity(city));
   },
+  onOptionClick(option) {
+    dispatch(ActionCreator.changeOption(option));
+  },
+  onOptionsFormClick() {
+    dispatch(ActionCreator.toggleOptionsPopup());
+  }
 });
 
 export {MainScreen};

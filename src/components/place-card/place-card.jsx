@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {HousingType, CardName, createStarsNumber} from '../../const';
 import placeCardProp from './place-card.prop';
 
 const PlaceCard = (props) => {
-  const [, setActiveCardId] = useState(``);
-  const {cardName, offer} = props;
+  const {cardName, offer, setActiveCardId} = props;
   const {id, isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
 
   const CardSettings = {
@@ -26,6 +25,10 @@ const PlaceCard = (props) => {
     <article className={`${CardSettings[cardName].cardClass} place-card`}
       onMouseOver={() => {
         setActiveCardId(id);
+      }}
+
+      onMouseOut={() => {
+        setActiveCardId(``);
       }}
     >
       {isPremium ?
@@ -70,6 +73,7 @@ const PlaceCard = (props) => {
 PlaceCard.propTypes = {
   cardName: PropTypes.string.isRequired,
   offer: placeCardProp,
+  setActiveCardId: PropTypes.func.isRequired,
 };
 
 export default PlaceCard;

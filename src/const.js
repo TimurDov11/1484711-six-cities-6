@@ -11,6 +11,13 @@ export const CITIES = {
   DUSSELDORF: `Dusseldorf`,
 };
 
+export const SORTING_OPTIONS = {
+  POPULAR: `Popular`,
+  PRICE_TO_HIGH: `Price: low to high`,
+  PRICE_TO_LOW: `Price: high to low`,
+  TOP_RATED_FIRST: `Top rated first`,
+};
+
 export const HousingType = {
   APARTMENT: `Apartment`,
   ROOM: `Private Room`,
@@ -58,4 +65,58 @@ export const getDate = (date) => {
   const year = new Date(date).getFullYear();
 
   return `${month} ${year}`;
+};
+
+export const sortPriceToHigh = (offerA, offerB) => {
+  if (offerA.price < offerB.price) {
+    return -1;
+  }
+  if (offerA.price > offerB.price) {
+    return 1;
+  }
+
+  return 0;
+};
+
+export const sortPriceToLow = (offerA, offerB) => {
+  if (offerA.price > offerB.price) {
+    return -1;
+  }
+  if (offerA.price < offerB.price) {
+    return 1;
+  }
+
+  return 0;
+};
+
+export const sortTopRatedFirst = (offerA, offerB) => {
+  if (offerA.rating > offerB.rating) {
+    return -1;
+  }
+  if (offerA.rating < offerB.rating) {
+    return 1;
+  }
+
+  return 0;
+};
+
+export const sortCards = (sortingOption, offers) => {
+  const sortOffers = offers.slice();
+
+  switch (sortingOption) {
+    case SORTING_OPTIONS.POPULAR:
+      return offers;
+
+    case SORTING_OPTIONS.PRICE_TO_HIGH:
+      return sortOffers.sort(sortPriceToHigh);
+
+    case SORTING_OPTIONS.PRICE_TO_LOW:
+      return sortOffers.sort(sortPriceToLow);
+
+    case SORTING_OPTIONS.TOP_RATED_FIRST:
+      return sortOffers.sort(sortTopRatedFirst);
+
+    default:
+      return offers;
+  }
 };
