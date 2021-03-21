@@ -30,6 +30,11 @@ export const CardName = {
   NEARPLACES: `NEARPLACES`,
 };
 
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
 export const createStarsNumber = (rating) => {
   return Math.round(rating) * 100 / 5;
 };

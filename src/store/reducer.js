@@ -1,11 +1,12 @@
 import {ActionType} from './action';
-import {CITIES, SORTING_OPTIONS, sortCards} from '../const';
+import {CITIES, SORTING_OPTIONS, sortCards, AuthorizationStatus} from '../const';
 
 const initialState = {
   city: CITIES.PARIS,
   offers: [],
   option: SORTING_OPTIONS.POPULAR,
   isOptionsOpened: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,10 +32,10 @@ const reducer = (state = initialState, action) => {
         isOptionsOpened: !state.isOptionsOpened
       };
 
-    case ActionType.FILL_OFFERS:
+    case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        offers: offers.filter((offer) => offer.city.name === action.payload)
+        authorizationStatus: action.payload,
       };
 
     default:
