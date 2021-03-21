@@ -1,6 +1,5 @@
 import {ActionType} from './action';
 import {CITIES, SORTING_OPTIONS, sortCards} from '../const';
-import offers from '../mocks/offers';
 
 const initialState = {
   city: CITIES.PARIS,
