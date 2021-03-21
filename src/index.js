@@ -16,7 +16,9 @@ const api = createAPI(
 
 const store = createStore(
     reducer,
-    composeWithDevTools()
+    composeWithDevTools(
+      applyMiddleware(thunk.withExtraArgument(api))
+    )
 );
 
 ReactDOM.render(
