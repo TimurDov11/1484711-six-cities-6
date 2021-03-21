@@ -3,7 +3,7 @@ import {CITIES, SORTING_OPTIONS, sortCards} from '../const';
 
 const initialState = {
   city: CITIES.PARIS,
-  offers,
+  offers: [],
   option: SORTING_OPTIONS.POPULAR,
   isOptionsOpened: false,
 };
