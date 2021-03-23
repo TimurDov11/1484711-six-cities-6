@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {Link} from 'react-router-dom';
@@ -8,12 +8,19 @@ import CitiesList from '../cities-list/cities-list';
 import PlacesList from '../places-list/places-list';
 import {CardName} from '../../const';
 import Map from '../map/map';
+import {fetchHotelsList} from "../../store/api-actions";
 
 const MainScreen = (props) => {
   const [activeCardId, setActiveCardId] = useState(``);
-  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick} = props;
+  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick, isDataLoaded, onLoadData} = props;
 
   const offersNumber = offers.length;
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
 
   return (
     <div className="page page--gray page--main">
@@ -73,6 +80,8 @@ MainScreen.propTypes = {
   onCityClick: PropTypes.func.isRequired,
   onOptionClick: PropTypes.func.isRequired,
   onOptionsFormClick: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -80,6 +89,7 @@ const mapStateToProps = (state) => ({
   offers: state.offers.filter((offer) => offer.city.name === state.city),
   option: state.option,
   isOptionsOpened: state.isOptionsOpened,
+  isDataLoaded: state.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -91,7 +101,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onOptionsFormClick() {
     dispatch(ActionCreator.toggleOptionsPopup());
-  }
+  },
+  onLoadData() {
+    dispatch(fetchHotelsList());
+  },
 });
 
 export {MainScreen};

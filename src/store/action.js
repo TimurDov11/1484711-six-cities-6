@@ -4,6 +4,7 @@ export const ActionType = {
   TOGGLE_OPTIONS_POPUP: `toggleOptionsPopup`,
   FILL_OFFERS: `fillOffers`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  LOAD_HOTELS: `data/loadHotels`,
 };
 
 export const ActionCreator = {
@@ -21,5 +22,9 @@ export const ActionCreator = {
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
+  }),
+  loadHotels: (hotels) => ({
+    type: ActionType.LOAD_HOTELS,
+    payload: hotels,
   })
 };

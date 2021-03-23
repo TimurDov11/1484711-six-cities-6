@@ -7,6 +7,7 @@ const initialState = {
   option: SORTING_OPTIONS.POPULAR,
   isOptionsOpened: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,14 +17,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         city: action.payload,
         option: SORTING_OPTIONS.POPULAR,
-        offers
+        //  offers
       };
 
     case ActionType.CHANGE_OPTION:
+      //  const offers = state.offers.slice();
+
       return {
         ...state,
         option: action.payload,
-        offers: sortCards(action.payload, offers),
+        offers: sortCards(action.payload, state.offers),
       };
 
     case ActionType.TOGGLE_OPTIONS_POPUP:
@@ -36,6 +39,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+
+    case ActionType.LOAD_HOTELS:
+      return {
+        ...state,
+        offers: action.payload,
+        isDataLoaded: true
       };
 
     default:

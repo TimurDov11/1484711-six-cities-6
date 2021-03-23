@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewsForm from '../reviews-form/reviews-form';
@@ -6,15 +7,15 @@ import ReviewsList from '../reviews-list/reviews-list';
 import PlacesList from '../places-list/places-list';
 import {CardName} from '../../const';
 import Map from '../map/map';
-import {MAX_REVIEWS_NUMBER, NEARBY_OFFERS_NUMBER, sortReviewsDate} from '../../const';
+import {NEARBY_OFFERS_NUMBER} from '../../const';
 
 const PropertyScreen = (props) => {
-  const {offers, reviews} = props;
+  const {offers} = props;
 
   const nearbyOffers = offers.slice(0, NEARBY_OFFERS_NUMBER);
-  const sortedDateReviews = reviews.sort(sortReviewsDate);
-  const shownReviews = sortedDateReviews.slice(0, MAX_REVIEWS_NUMBER);
-  const shownReviewsNumber = shownReviews.length;
+  //  const sortedDateReviews = reviews.sort(sortReviewsDate);
+  //  const shownReviews = sortedDateReviews.slice(0, MAX_REVIEWS_NUMBER);
+  //  const shownReviewsNumber = shownReviews.length;
 
   return (
     <div className="page">
@@ -158,8 +159,8 @@ const PropertyScreen = (props) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{shownReviewsNumber}</span></h2>
-                <ReviewsList reviews={shownReviews} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{}</span></h2>
+                <ReviewsList />
                 <ReviewsForm />
               </section>
             </div>
@@ -179,7 +180,12 @@ const PropertyScreen = (props) => {
 
 PropertyScreen.propTypes = {
   offers: PropTypes.array.isRequired,
-  reviews: PropTypes.array.isRequired,
+  //  reviews: PropTypes.array.isRequired,
 };
 
-export default PropertyScreen;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export {PropertyScreen};
+export default connect(mapStateToProps, null)(PropertyScreen);

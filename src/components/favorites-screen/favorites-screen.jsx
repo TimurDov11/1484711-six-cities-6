@@ -1,10 +1,14 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavoriteLocationItem from '../favorite-location-item/favorite-location-item';
 
 const FavoritesScreen = (props) => {
-  const {favoriteOffers, uniqueFavoriteCities} = props;
+  const {offers} = props;
+
+  const favoriteCities = offers.map((favoriteOffer) => favoriteOffer.city.name);
+  const uniqueFavoriteCities = Array.from(new Set(favoriteCities));
 
   return (
     <div className="page">
@@ -36,7 +40,7 @@ const FavoritesScreen = (props) => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {uniqueFavoriteCities.map((favoriteCity) => <FavoriteLocationItem key={favoriteCity} favoriteCity={favoriteCity} cityFavoriteOffers={favoriteOffers.filter((favoriteOffer) => favoriteOffer.city.name === favoriteCity)} />)}
+              {uniqueFavoriteCities.map((favoriteCity) => <FavoriteLocationItem key={favoriteCity} favoriteCity={favoriteCity} cityFavoriteOffers={offers.filter((favoriteOffer) => favoriteOffer.city.name === favoriteCity)} />)}
             </ul>
           </section>
         </div>
@@ -51,8 +55,12 @@ const FavoritesScreen = (props) => {
 };
 
 FavoritesScreen.propTypes = {
-  favoriteOffers: PropTypes.array.isRequired,
-  uniqueFavoriteCities: PropTypes.array.isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
-export default FavoritesScreen;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export {FavoritesScreen};
+export default connect(mapStateToProps, null)(FavoritesScreen);
