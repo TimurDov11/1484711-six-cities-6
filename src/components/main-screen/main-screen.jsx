@@ -9,6 +9,7 @@ import PlacesList from '../places-list/places-list';
 import {CardName} from '../../const';
 import Map from '../map/map';
 import {fetchHotelsList} from "../../store/api-actions";
+import SpinnerScreen from '../spinner-screen/spinner-screen';
 
 const MainScreen = (props) => {
   const [activeCardId, setActiveCardId] = useState(``);
@@ -58,7 +59,7 @@ const MainScreen = (props) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersNumber} places to stay in {city}</b>
+              {isDataLoaded ? <b className="places__found">{offersNumber} places to stay in {city}</b> : <SpinnerScreen />}
               {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} isOptionsOpened={isOptionsOpened} onOptionsFormClick={onOptionsFormClick} />}
               <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} setActiveCardId={setActiveCardId} />
             </section>
