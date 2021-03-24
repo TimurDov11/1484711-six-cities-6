@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {Link} from 'react-router-dom';
@@ -6,14 +6,22 @@ import PropTypes from 'prop-types';
 import SortingOptions from '../sorting-options/sorting-options';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList from '../places-list/places-list';
-import {CardName} from '../../const';
+import {CardName, sortCards} from '../../const';
 import Map from '../map/map';
+import {fetchHotelsList} from "../../store/api-actions";
+import SpinnerScreen from '../spinner-screen/spinner-screen';
 
 const MainScreen = (props) => {
   const [activeCardId, setActiveCardId] = useState(``);
-  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick} = props;
+  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick, isDataLoaded, onLoadData} = props;
 
   const offersNumber = offers.length;
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
 
   return (
     <div className="page page--gray page--main">
@@ -51,7 +59,7 @@ const MainScreen = (props) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersNumber} places to stay in {city}</b>
+              {isDataLoaded ? <b className="places__found">{offersNumber} places to stay in {city}</b> : <SpinnerScreen />}
               {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} isOptionsOpened={isOptionsOpened} onOptionsFormClick={onOptionsFormClick} />}
               <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} setActiveCardId={setActiveCardId} />
             </section>
@@ -73,13 +81,16 @@ MainScreen.propTypes = {
   onCityClick: PropTypes.func.isRequired,
   onOptionClick: PropTypes.func.isRequired,
   onOptionsFormClick: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
-  offers: state.offers.filter((offer) => offer.city.name === state.city),
+  offers: sortCards(state.option, state.offers.filter((offer) => offer.city.name === state.city)),
   option: state.option,
   isOptionsOpened: state.isOptionsOpened,
+  isDataLoaded: state.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -91,7 +102,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onOptionsFormClick() {
     dispatch(ActionCreator.toggleOptionsPopup());
-  }
+  },
+  onLoadData() {
+    dispatch(fetchHotelsList());
+  },
 });
 
 export {MainScreen};

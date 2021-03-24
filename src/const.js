@@ -19,15 +19,20 @@ export const SORTING_OPTIONS = {
 };
 
 export const HousingType = {
-  APARTMENT: `Apartment`,
-  ROOM: `Private Room`,
-  HOUSE: `House`,
-  HOTEL: `Hotel`,
+  apartment: `Apartment`,
+  room: `Private Room`,
+  house: `House`,
+  hotel: `Hotel`,
 };
 
 export const CardName = {
   CITIES: `CITIES`,
   NEARPLACES: `NEARPLACES`,
+};
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
 };
 
 export const createStarsNumber = (rating) => {
@@ -119,4 +124,19 @@ export const sortCards = (sortingOption, offers) => {
     default:
       return offers;
   }
+};
+
+export const adaptToClient = (data) => {
+  const adaptedData = {
+    ...data,
+    previewPhoto: data.preview_image,
+    isPremium: data.is_premium,
+    isFavorite: data.is_favorite,
+  };
+
+  delete adaptedData.preview_image;
+  delete adaptedData.is_premium;
+  delete adaptedData.is_favorite;
+
+  return adaptedData;
 };
