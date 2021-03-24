@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SortingOptions from '../sorting-options/sorting-options';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList from '../places-list/places-list';
-import {CardName} from '../../const';
+import {CardName, sortCards} from '../../const';
 import Map from '../map/map';
 import {fetchHotelsList} from "../../store/api-actions";
 import SpinnerScreen from '../spinner-screen/spinner-screen';
@@ -87,7 +87,7 @@ MainScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   city: state.city,
-  offers: state.offers.filter((offer) => offer.city.name === state.city),
+  offers: sortCards(state.option, state.offers.filter((offer) => offer.city.name === state.city)),
   option: state.option,
   isOptionsOpened: state.isOptionsOpened,
   isDataLoaded: state.isDataLoaded,

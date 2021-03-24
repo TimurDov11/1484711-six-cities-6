@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-import {CITIES, SORTING_OPTIONS, sortCards, AuthorizationStatus} from '../const';
+import {CITIES, SORTING_OPTIONS, AuthorizationStatus} from '../const';
 
 const initialState = {
   city: CITIES.PARIS,
@@ -17,16 +17,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         city: action.payload,
         option: SORTING_OPTIONS.POPULAR,
-        //  offers
       };
 
     case ActionType.CHANGE_OPTION:
-      //  const offers = state.offers.slice();
-
       return {
         ...state,
         option: action.payload,
-        offers: sortCards(action.payload, state.offers),
       };
 
     case ActionType.TOGGLE_OPTIONS_POPUP:
