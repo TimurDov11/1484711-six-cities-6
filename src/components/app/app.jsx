@@ -6,6 +6,7 @@ import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import PrivateRoute from '../private-route/private-route';
 
 const App = () => {
 
@@ -18,9 +19,11 @@ const App = () => {
         <Route exact path="/login">
           <LoginScreen />
         </Route>
-        <Route exact path="/favorites">
-          <FavoritesScreen />
-        </Route>
+        <PrivateRoute exact
+          path="/favorites"
+          render={() => <FavoritesScreen />}
+        >
+        </PrivateRoute>
         <Route exact path="/offer/:id">
           <PropertyScreen />
         </Route>

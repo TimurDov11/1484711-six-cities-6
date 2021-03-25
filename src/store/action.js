@@ -2,7 +2,6 @@ export const ActionType = {
   CHANGE_CITY: `changeCity`,
   CHANGE_OPTION: `changeOption`,
   TOGGLE_OPTIONS_POPUP: `toggleOptionsPopup`,
-  FILL_OFFERS: `fillOffers`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_HOTELS: `data/loadHotels`,
 };
