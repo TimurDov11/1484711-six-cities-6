@@ -4,6 +4,8 @@ export const ActionType = {
   TOGGLE_OPTIONS_POPUP: `toggleOptionsPopup`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_HOTELS: `data/loadHotels`,
+  REDIRECT_TO_ROUTE: `login/redirectToRoute`,
+  GET_AUTH_INFO: `data/authInfo`,
 };
 
 export const ActionCreator = {
@@ -25,5 +27,13 @@ export const ActionCreator = {
   loadHotels: (hotels) => ({
     type: ActionType.LOAD_HOTELS,
     payload: hotels,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  }),
+  getAuthInfo: (auth) => ({
+    type: ActionType.GET_AUTH_INFO,
+    payload: auth,
   })
 };

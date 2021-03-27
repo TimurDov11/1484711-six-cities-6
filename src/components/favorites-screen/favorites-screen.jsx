@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import FavoriteLocationItem from '../favorite-location-item/favorite-location-item';
 
 const FavoritesScreen = (props) => {
-  const {offers} = props;
+  const {offers, authInfo} = props;
 
   const favoriteCities = offers.map((favoriteOffer) => favoriteOffer.city.name);
   const uniqueFavoriteCities = Array.from(new Set(favoriteCities));
@@ -26,7 +26,7 @@ const FavoritesScreen = (props) => {
                   <a className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{authInfo.email}</span>
                   </a>
                 </li>
               </ul>
@@ -56,10 +56,12 @@ const FavoritesScreen = (props) => {
 
 FavoritesScreen.propTypes = {
   offers: PropTypes.array.isRequired,
+  authInfo: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  authInfo: state.authInfo,
 });
 
 export {FavoritesScreen};
