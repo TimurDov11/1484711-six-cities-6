@@ -8,6 +8,7 @@ const initialState = {
   isOptionsOpened: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
+  authInfo: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +43,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: action.payload,
         isDataLoaded: true
+      };
+
+    case ActionType.GET_AUTH_INFO:
+      return {
+        ...state,
+        authInfo: action.payload
       };
 
     default:

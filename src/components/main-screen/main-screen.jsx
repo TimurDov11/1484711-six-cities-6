@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 import SortingOptions from '../sorting-options/sorting-options';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList from '../places-list/places-list';
-import {CardName, sortCards} from '../../const';
+import {CardName, sortCards, AuthorizationStatus} from '../../const';
 import Map from '../map/map';
 import {fetchHotelsList} from "../../store/api-actions";
 import SpinnerScreen from '../spinner-screen/spinner-screen';
 
 const MainScreen = (props) => {
   const [activeCardId, setActiveCardId] = useState(``);
-  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick, isDataLoaded, onLoadData} = props;
+  const {city, offers, option, onCityClick, onOptionClick, isOptionsOpened, onOptionsFormClick, isDataLoaded, onLoadData, authorizationStatus, authInfo} = props;
 
   const offersNumber = offers.length;
 
@@ -39,7 +39,7 @@ const MainScreen = (props) => {
                   <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    {authorizationStatus === AuthorizationStatus.AUTH ? <span className="header__user-name user__name">{authInfo.email}</span> : <span className="header__login">Sign in</span>}
                   </Link>
                 </li>
               </ul>
@@ -83,6 +83,8 @@ MainScreen.propTypes = {
   onOptionsFormClick: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  authInfo: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -91,6 +93,8 @@ const mapStateToProps = (state) => ({
   option: state.option,
   isOptionsOpened: state.isOptionsOpened,
   isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
+  authInfo: state.authInfo,
 });
 
 const mapDispatchToProps = (dispatch) => ({
