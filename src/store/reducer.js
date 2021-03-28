@@ -45,7 +45,7 @@ const reducer = (state = initialState, action) => {
         isDataLoaded: true
       };
 
-    case ActionType.GET_AUTH_INFO:
+    case ActionType.SET_AUTH_INFO:
       return {
         ...state,
         authInfo: action.payload
