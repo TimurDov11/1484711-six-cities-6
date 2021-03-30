@@ -1,6 +1,6 @@
 export const MAX_REVIEWS_NUMBER = 2;
 
-export const NEARBY_OFFERS_NUMBER = 3;
+export const IMAGES_NUMBER = 6;
 
 export const CITIES = {
   PARIS: `Paris`,
@@ -132,6 +132,13 @@ export const adaptToClient = (data) => {
     previewPhoto: data.preview_image,
     isPremium: data.is_premium,
     isFavorite: data.is_favorite,
+    maxAdults: data.max_adults,
+    host: {
+      avatarUrl: data.host.avatar_url,
+      id: data.host.id,
+      isPro: data.host.is_pro,
+      name: data.host.name,
+    },
   };
 
   delete adaptedData.preview_image;

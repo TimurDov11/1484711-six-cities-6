@@ -7,6 +7,18 @@ export const fetchHotelsList = () => (dispatch, _getState, api) => (
     .then((data) => dispatch(ActionCreator.loadHotels(data)))
 );
 
+export const fetchHotelId = (id) => (dispatch, _getState, api) => (
+  api.get(`/hotels/${id}`)
+    .then(({data}) => adaptToClient(data))
+    .then((data) => dispatch(ActionCreator.loadHotelId(data)))
+);
+
+export const fetchHotelsNearbyHotelId = (id) => (dispatch, _getState, api) => (
+  api.get(`/hotels/${id}/nearby`)
+    .then(({data}) => data.map(adaptToClient))
+    .then((data) => dispatch(ActionCreator.loadHotelsNearbyHotelId(data)))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(({data}) => dispatch(ActionCreator.getAuthInfo(data)))
@@ -25,10 +37,4 @@ export const logout = () => (dispatch, _getState, api) => (
   api.get(`/logout`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
-);
-
-export const getAuth = () => (dispatch, _getState, api) => (
-  api.get(`/login`)
-    .then(({data}) => dispatch(ActionCreator.setAuthInfo(data)))
-    .catch(() => {})
 );

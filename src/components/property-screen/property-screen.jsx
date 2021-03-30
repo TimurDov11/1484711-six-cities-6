@@ -1,21 +1,47 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useParams, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewsForm from '../reviews-form/reviews-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import PlacesList from '../places-list/places-list';
-import {CardName} from '../../const';
+import SpinnerScreen from '../spinner-screen/spinner-screen';
+import {IMAGES_NUMBER, HousingType, CardName, AuthorizationStatus, createStarsNumber} from '../../const';
 import Map from '../map/map';
-import {NEARBY_OFFERS_NUMBER} from '../../const';
+import {fetchHotelId, fetchHotelsNearbyHotelId} from "../../store/api-actions";
+//  import propertyScreenProp from './property-screen.prop';
 
 const PropertyScreen = (props) => {
-  const {offers} = props;
+  const {id} = useParams();
+  const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo} = props;
 
-  const nearbyOffers = offers.slice(0, NEARBY_OFFERS_NUMBER);
+  //  const nearbyOffers = offers.slice(0, IMAGES_NUMBER);
   //  const sortedDateReviews = reviews.sort(sortReviewsDate);
   //  const shownReviews = sortedDateReviews.slice(0, MAX_REVIEWS_NUMBER);
   //  const shownReviewsNumber = shownReviews.length;
+
+  useEffect(() => {
+    if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
+      onLoadData(id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id !== offer.id && offer.id !== undefined) {
+      onLoadData(id);
+    }
+  }, [id]);
+
+  if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
+    return (
+      <SpinnerScreen />
+    );
+  }
+
+  const totalOffers = nearbyOffers.slice();
+  totalOffers.unshift(offer);
+
+  const history = useHistory();
 
   return (
     <div className="page">
@@ -33,7 +59,7 @@ const PropertyScreen = (props) => {
                   <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    {authorizationStatus === AuthorizationStatus.AUTH ? <span className="header__user-name user__name">{authInfo.email}</span> : <span className="header__login">Sign in</span>}
                   </Link>
                 </li>
               </ul>
@@ -46,116 +72,86 @@ const PropertyScreen = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
+              {offer.images && offer.images.slice(0, IMAGES_NUMBER).map((image) => {
+                return (
+                  <div key={image} className="property__image-wrapper">
+                    <img className="property__image" src={image} alt="Photo studio" />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {offer.isPremium ?
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+                : ``
+              }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {offer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={`${offer.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`}`} type="button" onClick={() => history.push(`/favorites`)}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">{offer.isFavorite ? `In bookmarks` : `To bookmarks`}</span>
                 </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `80%`}}></span>
+                  <span style={{width: `${createStarsNumber(offer.rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {HousingType[offer.type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {offer.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {offer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{offer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {offer.goods && offer.goods.map((good) => {
+                    return (
+                      <li key={good} className="property__inside-item">
+                        {good}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                  <div className={`${offer.host.isPro ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper` : `property__avatar-wrapper user__avatar-wrapper`}`}>
+                    <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {offer.host.name}
                   </span>
                 </div>
                 <div className="property__description">
-                  <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
+                  {offer.description && offer.description.match(/[^\.!\?]+[\.!\?]+["']?/g).map((sentence) => {
+                    return (
+                      <p key={sentence} className="property__text">
+                        {sentence}
+                      </p>
+                    );
+                  })}
                 </div>
               </div>
               <section className="property__reviews reviews">
@@ -165,12 +161,12 @@ const PropertyScreen = (props) => {
               </section>
             </div>
           </div>
-          <section className="property__map map"><Map offers={nearbyOffers} /></section>
+          <section className="property__map map"><Map activeCardId={offer.id} offers={totalOffers} /></section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList cardName={CardName.NEARPLACES} className={`near-places__list`} offers={nearbyOffers} />
+            <PlacesList cardName={CardName.NEARPLACES} className={`near-places__list`} offers={nearbyOffers} setActiveCardId={() => {}} />
           </section>
         </div>
       </main>
@@ -179,13 +175,32 @@ const PropertyScreen = (props) => {
 };
 
 PropertyScreen.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offer: PropTypes.object.isRequired,
+  nearbyOffers: PropTypes.array.isRequired,
+  //  isDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  authInfo: PropTypes.object.isRequired,
+  onLoadData: PropTypes.func.isRequired,
   //  reviews: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  //  city: state.city,
+  offer: state.offer,
+  nearbyOffers: state.nearbyOffers,
+  //  option: state.option,
+  //  isOptionsOpened: state.isOptionsOpened,
+  //  isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
+  authInfo: state.authInfo,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchHotelId(id));
+    dispatch(fetchHotelsNearbyHotelId(id));
+  },
 });
 
 export {PropertyScreen};
-export default connect(mapStateToProps, null)(PropertyScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyScreen);

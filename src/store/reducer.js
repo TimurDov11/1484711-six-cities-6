@@ -4,6 +4,8 @@ import {CITIES, SORTING_OPTIONS, AuthorizationStatus} from '../const';
 const initialState = {
   city: CITIES.PARIS,
   offers: [],
+  offer: {},
+  nearbyOffers: [],
   option: SORTING_OPTIONS.POPULAR,
   isOptionsOpened: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -43,6 +45,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: action.payload,
         isDataLoaded: true
+      };
+
+    case ActionType.LOAD_HOTEL_ID:
+      return {
+        ...state,
+        offer: action.payload,
+      };
+
+    case ActionType.LOAD_HOTELS_NEARBY_HOTEL_ID:
+      return {
+        ...state,
+        nearbyOffers: action.payload,
       };
 
     case ActionType.SET_AUTH_INFO:

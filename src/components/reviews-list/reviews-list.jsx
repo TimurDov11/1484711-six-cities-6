@@ -7,7 +7,7 @@ const ReviewsList = (props) => {
 
   return (
     <ul className="reviews__list">
-      {reviews.map((review) => <ReviewsItem key={review.id} review={review} />)}
+      {reviews && reviews.map((review) => <ReviewsItem key={review.id} review={review} />)}
     </ul>
   );
 };
