@@ -15,11 +15,6 @@ const PropertyScreen = (props) => {
   const {id} = useParams();
   const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo} = props;
 
-  //  const nearbyOffers = offers.slice(0, IMAGES_NUMBER);
-  //  const sortedDateReviews = reviews.sort(sortReviewsDate);
-  //  const shownReviews = sortedDateReviews.slice(0, MAX_REVIEWS_NUMBER);
-  //  const shownReviewsNumber = shownReviews.length;
-
   useEffect(() => {
     if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
       onLoadData(id);
@@ -155,8 +150,7 @@ const PropertyScreen = (props) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{}</span></h2>
-                <ReviewsList />
+                <ReviewsList id={id} offerId={offer.id} />
                 <ReviewsForm />
               </section>
             </div>
@@ -188,8 +182,6 @@ const mapStateToProps = (state) => ({
   //  city: state.city,
   offer: state.offer,
   nearbyOffers: state.nearbyOffers,
-  //  option: state.option,
-  //  isOptionsOpened: state.isOptionsOpened,
   //  isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
   authInfo: state.authInfo,

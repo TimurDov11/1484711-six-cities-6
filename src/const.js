@@ -1,4 +1,4 @@
-export const MAX_REVIEWS_NUMBER = 2;
+export const MAX_REVIEWS_NUMBER = 10;
 
 export const IMAGES_NUMBER = 6;
 
@@ -144,6 +144,21 @@ export const adaptToClient = (data) => {
   delete adaptedData.preview_image;
   delete adaptedData.is_premium;
   delete adaptedData.is_favorite;
+  delete adaptedData.max_adults;
+
+  return adaptedData;
+};
+
+export const adaptCommentsToClient = (data) => {
+  const adaptedData = {
+    ...data,
+    user: {
+      src: data.user.avatar_url,
+      id: data.user.id,
+      isPro: data.user.is_pro,
+      name: data.user.name,
+    },
+  };
 
   return adaptedData;
 };

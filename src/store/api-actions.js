@@ -1,5 +1,5 @@
 import {ActionCreator} from "./action";
-import {AuthorizationStatus, adaptToClient} from "../const";
+import {AuthorizationStatus, adaptToClient, adaptCommentsToClient} from "../const";
 
 export const fetchHotelsList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -11,6 +11,12 @@ export const fetchHotelId = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}`)
     .then(({data}) => adaptToClient(data))
     .then((data) => dispatch(ActionCreator.loadHotelId(data)))
+);
+
+export const fetchCommentsHotelId = (id) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`)
+    .then(({data}) => data.map(adaptCommentsToClient))
+    .then((data) => dispatch(ActionCreator.loadCommentsHotelId(data)))
 );
 
 export const fetchHotelsNearbyHotelId = (id) => (dispatch, _getState, api) => (
@@ -31,6 +37,11 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => dispatch(ActionCreator.setAuthInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+);
+
+export const commentPost = (id, {commentPost: comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, {comment, rating})
+    .then(({data}) => dispatch(ActionCreator.setAuthInfo(data)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (

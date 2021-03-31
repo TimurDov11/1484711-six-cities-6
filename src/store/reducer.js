@@ -5,6 +5,7 @@ const initialState = {
   city: CITIES.PARIS,
   offers: [],
   offer: {},
+  reviews: [],
   nearbyOffers: [],
   option: SORTING_OPTIONS.POPULAR,
   isOptionsOpened: false,
@@ -51,6 +52,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offer: action.payload,
+      };
+
+    case ActionType.LOAD_COMMENTS_HOTEL_ID:
+      return {
+        ...state,
+        reviews: action.payload,
       };
 
     case ActionType.LOAD_HOTELS_NEARBY_HOTEL_ID:
