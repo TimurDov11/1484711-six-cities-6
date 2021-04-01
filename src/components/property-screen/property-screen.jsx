@@ -151,7 +151,7 @@ const PropertyScreen = (props) => {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList id={id} offerId={offer.id} />
-                <ReviewsForm id={id} />
+                {authorizationStatus === AuthorizationStatus.AUTH && <ReviewsForm id={id} />}
               </section>
             </div>
           </div>
