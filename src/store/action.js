@@ -9,6 +9,8 @@ export const ActionType = {
   LOAD_HOTELS_NEARBY_HOTEL_ID: `data/loadHotelsNearbyHotelId`,
   REDIRECT_TO_ROUTE: `login/redirectToRoute`,
   SET_AUTH_INFO: `data/authInfo`,
+  SET_COMMENT_POST: `data/commentPost`,
+  TOGGLE_SUBMIT_STATE: `toggleSubmitState`,
 };
 
 export const ActionCreator = {
@@ -50,5 +52,13 @@ export const ActionCreator = {
   setAuthInfo: (auth) => ({
     type: ActionType.SET_AUTH_INFO,
     payload: auth,
-  })
+  }),
+  setCommentPost: (comment) => ({
+    type: ActionType.SET_COMMENT_POST,
+    payload: comment,
+  }),
+  toggleSubmitState: (boolean) => ({
+    type: ActionType.TOGGLE_SUBMIT_STATE,
+    payload: boolean,
+  }),
 };

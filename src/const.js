@@ -2,6 +2,10 @@ export const MAX_REVIEWS_NUMBER = 10;
 
 export const IMAGES_NUMBER = 6;
 
+export const MIN_REVIEWS_FORM_TEXT_NUMBER = 50;
+
+export const MAX_REVIEWS_FORM_TEXT_NUMBER = 300;
+
 export const CITIES = {
   PARIS: `Paris`,
   COLOGNE: `Cologne`,

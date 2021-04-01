@@ -151,7 +151,7 @@ const PropertyScreen = (props) => {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList id={id} offerId={offer.id} />
-                <ReviewsForm />
+                <ReviewsForm id={id} />
               </section>
             </div>
           </div>
@@ -171,11 +171,9 @@ const PropertyScreen = (props) => {
 PropertyScreen.propTypes = {
   offer: PropTypes.object.isRequired,
   nearbyOffers: PropTypes.array.isRequired,
-  //  isDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   authInfo: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  //  reviews: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

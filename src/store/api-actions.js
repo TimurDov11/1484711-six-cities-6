@@ -39,9 +39,9 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
 );
 
-export const commentPost = (id, {commentPost: comment, rating}) => (dispatch, _getState, api) => (
+export const commentPost = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(`/comments/${id}`, {comment, rating})
-    .then(({data}) => dispatch(ActionCreator.setAuthInfo(data)))
+    .then(({data}) => dispatch(ActionCreator.setCommentPost(data)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (

@@ -12,6 +12,8 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
   authInfo: {},
+  commentPost: {},
+  isReviewsFormSubmitDisabled: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -70,6 +72,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authInfo: action.payload
+      };
+
+    case ActionType.SET_COMMENT_POST:
+      return {
+        ...state,
+        commentPost: action.payload
+      };
+
+    case ActionType.TOGGLE_SUBMIT_STATE:
+      return {
+        ...state,
+        isReviewsFormSubmitDisabled: action.payload
       };
 
     default:
