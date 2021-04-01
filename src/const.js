@@ -39,6 +39,20 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const AppRoute = {
+  FAVORITES: `/favorites`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
+  OFFER_ID: `/offer/:id`,
+  ROOT: `/`,
+};
+
+export const APIRoute = {
+  HOTELS: `/hotels`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
+};
+
 export const createStarsNumber = (rating) => {
   return Math.round(rating) * 100 / 5;
 };

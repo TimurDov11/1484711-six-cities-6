@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {logout} from "../../store/api-actions";
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 const LogoutScreen = ({authorizationStatus, onLogout}) => {
   if (authorizationStatus === AuthorizationStatus.AUTH) {
@@ -11,7 +11,7 @@ const LogoutScreen = ({authorizationStatus, onLogout}) => {
   }
 
   return (
-    <Redirect to={`/`} />
+    <Redirect to={AppRoute.ROOT} />
   );
 };
 
