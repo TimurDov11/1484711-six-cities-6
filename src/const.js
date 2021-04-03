@@ -6,6 +6,8 @@ export const MIN_REVIEWS_FORM_TEXT_NUMBER = 50;
 
 export const MAX_REVIEWS_FORM_TEXT_NUMBER = 300;
 
+export const RATING_TITLES = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
+
 export const CITIES = {
   PARIS: `Paris`,
   COLOGNE: `Cologne`,
