@@ -11,6 +11,7 @@ export const ActionType = {
   SET_AUTH_INFO: `data/authInfo`,
   SET_COMMENT_POST: `data/commentPost`,
   TOGGLE_SUBMIT_STATE: `toggleSubmitState`,
+  TOGGLE_MISTAKE_STATE: `toggleMistakeState`,
 };
 
 export const ActionCreator = {
@@ -59,6 +60,10 @@ export const ActionCreator = {
   }),
   toggleSubmitState: (boolean) => ({
     type: ActionType.TOGGLE_SUBMIT_STATE,
+    payload: boolean,
+  }),
+  toggleMistakeState: (boolean) => ({
+    type: ActionType.TOGGLE_MISTAKE_STATE,
     payload: boolean,
   }),
 };

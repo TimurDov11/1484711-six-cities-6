@@ -14,6 +14,7 @@ const initialState = {
   authInfo: {},
   commentPost: {},
   isReviewsFormSubmitDisabled: true,
+  isReviewsFormHasMistake: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -84,6 +85,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isReviewsFormSubmitDisabled: action.payload
+      };
+
+    case ActionType.TOGGLE_MISTAKE_STATE:
+      return {
+        ...state,
+        isReviewsFormHasMistake: action.payload
       };
 
     default:

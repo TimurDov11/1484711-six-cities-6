@@ -11,6 +11,7 @@ import Map from '../map/map';
 import {fetchHotelId, fetchHotelsNearbyHotelId} from "../../store/api-actions";
 
 const PropertyScreen = (props) => {
+  const history = useHistory();
   const {id} = useParams();
   const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo} = props;
 
@@ -34,8 +35,6 @@ const PropertyScreen = (props) => {
 
   const totalOffers = nearbyOffers.slice();
   totalOffers.unshift(offer);
-
-  const history = useHistory();
 
   return (
     <div className="page">

@@ -10,7 +10,7 @@ const ReviewsForm = (props) => {
   const [reviewsFormRating, setReviewsFormRating] = useState(0);
   const textareaRef = useRef();
   const raitingRef = useRef();
-  const {isReviewsFormSubmitDisabled, onFormSubmitActivate, id, onSubmit} = props;
+  const {isReviewsFormSubmitDisabled, isReviewsFormHasMistake, onFormSubmitActivate, id, onSubmit, onMistake} = props;
 
   const handleTextareaChange = (evt) => {
     const {value} = evt.target;
@@ -30,6 +30,10 @@ const ReviewsForm = (props) => {
 
     if (reviewsFormText.length < MIN_REVIEWS_FORM_TEXT_NUMBER || reviewsFormText.length >= MAX_REVIEWS_FORM_TEXT_NUMBER) {
       onFormSubmitActivate(true);
+    }
+
+    if (isReviewsFormHasMistake) {
+      onMistake(false);
     }
   }, [reviewsFormText, reviewsFormRating]);
 
@@ -56,6 +60,7 @@ const ReviewsForm = (props) => {
     .catch(() => {
       textareaRef.current.removeAttribute(`disabled`);
       raitingRef.current.removeAttribute(`disabled`);
+      onMistake(true);
     });
   };
 
@@ -101,7 +106,7 @@ const ReviewsForm = (props) => {
       <textarea ref={textareaRef} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleTextareaChange}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          {isReviewsFormHasMistake && <b className="reviews__text-amount">MISTAKE! TRY AGAIN!</b>} To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isReviewsFormSubmitDisabled}>Submit</button>
       </div>
@@ -114,10 +119,13 @@ ReviewsForm.propTypes = {
   onFormSubmitActivate: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isReviewsFormHasMistake: PropTypes.bool.isRequired,
+  onMistake: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isReviewsFormSubmitDisabled: state.isReviewsFormSubmitDisabled,
+  isReviewsFormHasMistake: state.isReviewsFormHasMistake,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -126,6 +134,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onSubmit(id, commentData) {
     return dispatch(commentPost(id, commentData));
+  },
+  onMistake(boolean) {
+    dispatch(ActionCreator.toggleMistakeState(boolean));
   },
 });
 

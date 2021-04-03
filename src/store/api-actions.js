@@ -27,7 +27,7 @@ export const fetchHotelsNearbyHotelId = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(({data}) => dispatch(ActionCreator.getAuthInfo(data)))
+    .then(({data}) => dispatch(ActionCreator.setAuthInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
@@ -45,7 +45,7 @@ export const commentPost = (id, {comment, rating}) => (dispatch, _getState, api)
 );
 
 export const logout = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.LOGOUT)
+  api.get(`/logout`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+    //  .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
 );
