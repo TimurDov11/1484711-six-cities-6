@@ -1,6 +1,12 @@
-export const MAX_REVIEWS_NUMBER = 2;
+export const MAX_REVIEWS_NUMBER = 10;
 
-export const NEARBY_OFFERS_NUMBER = 3;
+export const IMAGES_NUMBER = 6;
+
+export const MIN_REVIEWS_FORM_TEXT_NUMBER = 50;
+
+export const MAX_REVIEWS_FORM_TEXT_NUMBER = 300;
+
+export const RATING_TITLES = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
 
 export const CITIES = {
   PARIS: `Paris`,
@@ -33,6 +39,20 @@ export const CardName = {
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
+};
+
+export const AppRoute = {
+  FAVORITES: `/favorites`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
+  OFFER_ID: `/offer/:id`,
+  ROOT: `/`,
+};
+
+export const APIRoute = {
+  HOTELS: `/hotels`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
 };
 
 export const createStarsNumber = (rating) => {
@@ -132,11 +152,33 @@ export const adaptToClient = (data) => {
     previewPhoto: data.preview_image,
     isPremium: data.is_premium,
     isFavorite: data.is_favorite,
+    maxAdults: data.max_adults,
+    host: {
+      avatarUrl: data.host.avatar_url,
+      id: data.host.id,
+      isPro: data.host.is_pro,
+      name: data.host.name,
+    },
   };
 
   delete adaptedData.preview_image;
   delete adaptedData.is_premium;
   delete adaptedData.is_favorite;
+  delete adaptedData.max_adults;
+
+  return adaptedData;
+};
+
+export const adaptCommentsToClient = (data) => {
+  const adaptedData = {
+    ...data,
+    user: {
+      src: data.user.avatar_url,
+      id: data.user.id,
+      isPro: data.user.is_pro,
+      name: data.user.name,
+    },
+  };
 
   return adaptedData;
 };

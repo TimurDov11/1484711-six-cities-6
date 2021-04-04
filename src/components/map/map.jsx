@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 
 const Map = (props) => {
   const {offers, activeCardId} = props;
+
   const [offerOne] = offers;
 
   const mapRef = useRef();

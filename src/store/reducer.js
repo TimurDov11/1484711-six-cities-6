@@ -4,11 +4,17 @@ import {CITIES, SORTING_OPTIONS, AuthorizationStatus} from '../const';
 const initialState = {
   city: CITIES.PARIS,
   offers: [],
+  offer: {},
+  reviews: [],
+  nearbyOffers: [],
   option: SORTING_OPTIONS.POPULAR,
   isOptionsOpened: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
   authInfo: {},
+  commentPost: {},
+  isReviewsFormSubmitDisabled: true,
+  isReviewsFormHasMistake: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -45,10 +51,46 @@ const reducer = (state = initialState, action) => {
         isDataLoaded: true
       };
 
-    case ActionType.GET_AUTH_INFO:
+    case ActionType.LOAD_HOTEL_ID:
+      return {
+        ...state,
+        offer: action.payload,
+      };
+
+    case ActionType.LOAD_COMMENTS_HOTEL_ID:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case ActionType.LOAD_HOTELS_NEARBY_HOTEL_ID:
+      return {
+        ...state,
+        nearbyOffers: action.payload,
+      };
+
+    case ActionType.SET_AUTH_INFO:
       return {
         ...state,
         authInfo: action.payload
+      };
+
+    case ActionType.SET_COMMENT_POST:
+      return {
+        ...state,
+        commentPost: action.payload
+      };
+
+    case ActionType.TOGGLE_SUBMIT_STATE:
+      return {
+        ...state,
+        isReviewsFormSubmitDisabled: action.payload
+      };
+
+    case ActionType.TOGGLE_MISTAKE_STATE:
+      return {
+        ...state,
+        isReviewsFormHasMistake: action.payload
       };
 
     default:

@@ -4,8 +4,14 @@ export const ActionType = {
   TOGGLE_OPTIONS_POPUP: `toggleOptionsPopup`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_HOTELS: `data/loadHotels`,
+  LOAD_HOTEL_ID: `data/loadHotelId`,
+  LOAD_COMMENTS_HOTEL_ID: `data/loadCommentsHotelId`,
+  LOAD_HOTELS_NEARBY_HOTEL_ID: `data/loadHotelsNearbyHotelId`,
   REDIRECT_TO_ROUTE: `login/redirectToRoute`,
-  GET_AUTH_INFO: `data/authInfo`,
+  SET_AUTH_INFO: `data/authInfo`,
+  SET_COMMENT_POST: `data/commentPost`,
+  TOGGLE_SUBMIT_STATE: `toggleSubmitState`,
+  TOGGLE_MISTAKE_STATE: `toggleMistakeState`,
 };
 
 export const ActionCreator = {
@@ -28,12 +34,36 @@ export const ActionCreator = {
     type: ActionType.LOAD_HOTELS,
     payload: hotels,
   }),
+  loadHotelId: (hotel) => ({
+    type: ActionType.LOAD_HOTEL_ID,
+    payload: hotel,
+  }),
+  loadCommentsHotelId: (comments) => ({
+    type: ActionType.LOAD_COMMENTS_HOTEL_ID,
+    payload: comments,
+  }),
+  loadHotelsNearbyHotelId: (hotels) => ({
+    type: ActionType.LOAD_HOTELS_NEARBY_HOTEL_ID,
+    payload: hotels,
+  }),
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
   }),
-  getAuthInfo: (auth) => ({
-    type: ActionType.GET_AUTH_INFO,
+  setAuthInfo: (auth) => ({
+    type: ActionType.SET_AUTH_INFO,
     payload: auth,
-  })
+  }),
+  setCommentPost: (comment) => ({
+    type: ActionType.SET_COMMENT_POST,
+    payload: comment,
+  }),
+  toggleSubmitState: (boolean) => ({
+    type: ActionType.TOGGLE_SUBMIT_STATE,
+    payload: boolean,
+  }),
+  toggleMistakeState: (boolean) => ({
+    type: ActionType.TOGGLE_MISTAKE_STATE,
+    payload: boolean,
+  }),
 };

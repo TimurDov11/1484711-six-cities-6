@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SortingOptions from '../sorting-options/sorting-options';
 import CitiesList from '../cities-list/cities-list';
 import PlacesList from '../places-list/places-list';
-import {CardName, sortCards, AuthorizationStatus} from '../../const';
+import {CardName, sortCards, AuthorizationStatus, AppRoute} from '../../const';
 import Map from '../map/map';
 import {fetchHotelsList} from "../../store/api-actions";
 import SpinnerScreen from '../spinner-screen/spinner-screen';
@@ -36,7 +36,7 @@ const MainScreen = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     {authorizationStatus === AuthorizationStatus.AUTH ? <span className="header__user-name user__name">{authInfo.email}</span> : <span className="header__login">Sign in</span>}
