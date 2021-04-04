@@ -1,9 +1,10 @@
 import {ActionType} from './action';
-import {CITIES, SORTING_OPTIONS, AuthorizationStatus} from '../const';
+import {CITIES, SORTING_OPTIONS, AuthorizationStatus, updateData} from '../const';
 
 const initialState = {
   city: CITIES.PARIS,
   offers: [],
+  favoriteOffers: [],
   offer: {},
   reviews: [],
   nearbyOffers: [],
@@ -11,6 +12,7 @@ const initialState = {
   isOptionsOpened: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
+  isFavoriteOffersLoaded: false,
   authInfo: {},
   commentPost: {},
   isReviewsFormSubmitDisabled: true,
@@ -93,10 +95,24 @@ const reducer = (state = initialState, action) => {
         isReviewsFormHasMistake: action.payload
       };
 
+    case ActionType.TOGGLE_HOTEL_FAVORITE_STATE:
+      return {
+        ...state,
+        offers: updateData(state.offers, action.payload),
+        offer: action.payload,
+        isFavoriteOffersLoaded: false,
+      };
+
+    case ActionType.LOAD_FAVORITE_HOTELS:
+      return {
+        ...state,
+        favoriteOffers: action.payload,
+        isFavoriteOffersLoaded: true
+      };
+
     default:
       return state;
   }
 };
-
 
 export {reducer};

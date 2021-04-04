@@ -12,6 +12,8 @@ export const ActionType = {
   SET_COMMENT_POST: `data/commentPost`,
   TOGGLE_SUBMIT_STATE: `toggleSubmitState`,
   TOGGLE_MISTAKE_STATE: `toggleMistakeState`,
+  TOGGLE_HOTEL_FAVORITE_STATE: `toggleHotelFavoriteState`,
+  LOAD_FAVORITE_HOTELS: `data/loadFavoriteHotels`,
 };
 
 export const ActionCreator = {
@@ -65,5 +67,13 @@ export const ActionCreator = {
   toggleMistakeState: (boolean) => ({
     type: ActionType.TOGGLE_MISTAKE_STATE,
     payload: boolean,
+  }),
+  toggleHotelFavoriteState: (hotel) => ({
+    type: ActionType.TOGGLE_HOTEL_FAVORITE_STATE,
+    payload: hotel,
+  }),
+  loadFavoriteHotels: (hotels) => ({
+    type: ActionType.LOAD_FAVORITE_HOTELS,
+    payload: hotels,
   }),
 };

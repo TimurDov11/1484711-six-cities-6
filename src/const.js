@@ -50,6 +50,7 @@ export const AppRoute = {
 };
 
 export const APIRoute = {
+  FAVORITE: `/favorite`,
   HOTELS: `/hotels`,
   LOGIN: `/login`,
   LOGOUT: `/logout`,
@@ -181,4 +182,17 @@ export const adaptCommentsToClient = (data) => {
   };
 
   return adaptedData;
+};
+
+export const updateData = (data, updatedData) => {
+  const DELETE_COUNT = 1;
+  const index = data.findIndex((everyData) => everyData.id === updatedData.id);
+
+  if (index < 0) {
+    return data;
+  }
+
+  data.splice(index, DELETE_COUNT, updatedData);
+
+  return data;
 };

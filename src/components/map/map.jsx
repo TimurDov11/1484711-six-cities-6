@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 
 const Map = (props) => {
   const {offers, activeCardId} = props;
@@ -70,7 +70,7 @@ const Map = (props) => {
   }, [offers, activeCardId]);
 
   return (
-    <div id="map" style={{height: `100%`}} ref={mapRef}></div>
+    <div id="map" style={{height: `100%`}}></div>
   );
 };
 

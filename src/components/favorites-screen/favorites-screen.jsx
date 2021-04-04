@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavoriteLocationItem from '../favorite-location-item/favorite-location-item';
+import FavoriteEmptyItem from '../favorite-empty-item/favorite-empty-item';
+import SpinnerScreen from '../spinner-screen/spinner-screen';
 import {AppRoute} from '../../const';
+import {fetchFavoriteHotelsList} from "../../store/api-actions";
 
 const FavoritesScreen = (props) => {
-  const {offers, authInfo} = props;
+  const {favoriteOffers, authInfo, isFavoriteOffersLoaded, onLoadData} = props;
 
-  const favoriteCities = offers.map((favoriteOffer) => favoriteOffer.city.name);
+  const favoriteCities = favoriteOffers.map((favoriteOffer) => favoriteOffer.city.name);
   const uniqueFavoriteCities = Array.from(new Set(favoriteCities));
+
+  useEffect(() => {
+    if (!isFavoriteOffersLoaded) {
+      onLoadData();
+    }
+  }, [isFavoriteOffersLoaded]);
 
   return (
     <div className="page">
@@ -36,34 +45,46 @@ const FavoritesScreen = (props) => {
         </div>
       </header>
 
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {uniqueFavoriteCities.map((favoriteCity) => <FavoriteLocationItem key={favoriteCity} favoriteCity={favoriteCity} cityFavoriteOffers={offers.filter((favoriteOffer) => favoriteOffer.city.name === favoriteCity)} />)}
-            </ul>
-          </section>
-        </div>
-      </main>
+      {favoriteOffers.length === 0 && isFavoriteOffersLoaded ?
+        <FavoriteEmptyItem />
+        :
+        <main className="page__main page__main--favorites">
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              {isFavoriteOffersLoaded ? <h1 className="favorites__title">Saved listing</h1> : <SpinnerScreen />}
+              <ul className="favorites__list">
+                {uniqueFavoriteCities.map((favoriteCity) => <FavoriteLocationItem key={favoriteCity} favoriteCity={favoriteCity} cityFavoriteOffers={favoriteOffers.filter((favoriteOffer) => favoriteOffer.city.name === favoriteCity)} />)}
+              </ul>
+            </section>
+          </div>
+        </main>}
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.ROOT}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
+        </Link>
       </footer>
     </div>
   );
 };
 
 FavoritesScreen.propTypes = {
-  offers: PropTypes.array.isRequired,
+  favoriteOffers: PropTypes.array.isRequired,
   authInfo: PropTypes.object.isRequired,
+  isFavoriteOffersLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  favoriteOffers: state.favoriteOffers,
   authInfo: state.authInfo,
+  isFavoriteOffersLoaded: state.isFavoriteOffersLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFavoriteHotelsList());
+  },
 });
 
 export {FavoritesScreen};
-export default connect(mapStateToProps, null)(FavoritesScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);

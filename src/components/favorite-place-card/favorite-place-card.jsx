@@ -1,11 +1,20 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {HousingType, createStarsNumber} from '../../const';
+import {favoriteHotelPost} from "../../store/api-actions";
 import favoritePlaceCardProp from './favorite-place-card.prop';
+import PropTypes from 'prop-types';
 
 const FavoritePlaceCard = (props) => {
-  const {cityFavoriteOffer} = props;
+  const {cityFavoriteOffer, onFavoriteHotelClick} = props;
   const {id, previewPhoto, price, isFavorite, rating, title, type} = cityFavoriteOffer;
+
+  const handleFavoriteHotelClick = (evt) => {
+    evt.preventDefault();
+
+    onFavoriteHotelClick(id, isFavorite ? 0 : 1);
+  };
 
   return (
     <article className="favorites__card place-card">
@@ -20,7 +29,7 @@ const FavoritePlaceCard = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button" onClick={handleFavoriteHotelClick}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -44,6 +53,14 @@ const FavoritePlaceCard = (props) => {
 
 FavoritePlaceCard.propTypes = {
   cityFavoriteOffer: favoritePlaceCardProp,
+  onFavoriteHotelClick: PropTypes.func.isRequired,
 };
 
-export default FavoritePlaceCard;
+const mapDispatchToProps = (dispatch) => ({
+  onFavoriteHotelClick(id, status) {
+    dispatch(favoriteHotelPost(id, status));
+  },
+});
+
+export {FavoritePlaceCard};
+export default connect(null, mapDispatchToProps)(FavoritePlaceCard);
