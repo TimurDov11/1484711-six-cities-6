@@ -1,11 +1,13 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {connect} from "react-redux";
+import {Link} from 'react-router-dom';
+import {favoriteHotelPost} from "../../store/api-actions";
 import PropTypes from 'prop-types';
 import {HousingType, CardName, createStarsNumber} from '../../const';
 import placeCardProp from './place-card.prop';
 
 const PlaceCard = (props) => {
-  const {cardName, offer, setActiveCardId} = props;
+  const {cardName, offer, setActiveCardId, onFavoriteHotelClick} = props;
   const {id, isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
 
   const CardSettings = {
@@ -19,7 +21,11 @@ const PlaceCard = (props) => {
     },
   };
 
-  const history = useHistory();
+  const handleFavoriteHotelClick = (evt) => {
+    evt.preventDefault();
+
+    onFavoriteHotelClick(id, isFavorite ? 0 : 1);
+  };
 
   return (
     <article className={`${CardSettings[cardName].cardClass} place-card`}
@@ -48,7 +54,7 @@ const PlaceCard = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`${isFavorite ? `place-card__bookmark-button place-card__bookmark-button--active button` : `place-card__bookmark-button button`}`} type="button" onClick={() => history.push(`/favorites`)}>
+          <button className={`${isFavorite ? `place-card__bookmark-button place-card__bookmark-button--active button` : `place-card__bookmark-button button`}`} type="button" onClick={handleFavoriteHotelClick}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -74,6 +80,14 @@ PlaceCard.propTypes = {
   cardName: PropTypes.string.isRequired,
   offer: placeCardProp,
   setActiveCardId: PropTypes.func.isRequired,
+  onFavoriteHotelClick: PropTypes.func.isRequired,
 };
 
-export default PlaceCard;
+const mapDispatchToProps = (dispatch) => ({
+  onFavoriteHotelClick(id, status) {
+    dispatch(favoriteHotelPost(id, status));
+  },
+});
+
+export {PlaceCard};
+export default connect(null, mapDispatchToProps)(PlaceCard);

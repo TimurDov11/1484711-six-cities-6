@@ -1,5 +1,5 @@
 import {ActionCreator} from "./action";
-import {AuthorizationStatus, APIRoute, adaptToClient, adaptCommentsToClient} from "../const";
+import {AuthorizationStatus, APIRoute, AppRoute, adaptToClient, adaptCommentsToClient} from "../const";
 
 export const fetchHotelsList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
@@ -36,7 +36,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => dispatch(ActionCreator.setAuthInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
 );
 
 export const commentPost = (id, {comment, rating}) => (dispatch, _getState, api) => (
@@ -47,5 +47,17 @@ export const commentPost = (id, {comment, rating}) => (dispatch, _getState, api)
 export const logout = () => (dispatch, _getState, api) => (
   api.get(`/logout`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
-    //  .then(() => dispatch(ActionCreator.redirectToRoute(`/`)))
+);
+
+export const favoriteHotelPost = (id, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${status}`)
+    .then(({data}) => adaptToClient(data))
+    .then((data) => dispatch(ActionCreator.toggleHotelFavoriteState(data)))
+    .catch(() => dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN)))
+);
+
+export const fetchFavoriteHotelsList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => data.map(adaptToClient))
+    .then((data) => dispatch(ActionCreator.loadFavoriteHotels(data)))
 );

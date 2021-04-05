@@ -10,6 +10,7 @@ import {CardName, sortCards, AuthorizationStatus, AppRoute} from '../../const';
 import Map from '../map/map';
 import {fetchHotelsList} from "../../store/api-actions";
 import SpinnerScreen from '../spinner-screen/spinner-screen';
+import MainEmptyItem from '../main-empty-item/main-empty-item';
 
 const MainScreen = (props) => {
   const [activeCardId, setActiveCardId] = useState(``);
@@ -48,7 +49,7 @@ const MainScreen = (props) => {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={offers.length === 0 && isDataLoaded ? `page__main page__main--index page__main--index-empty` : `page__main page__main--index`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -56,17 +57,20 @@ const MainScreen = (props) => {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              {isDataLoaded ? <b className="places__found">{offersNumber} places to stay in {city}</b> : <SpinnerScreen />}
-              {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} isOptionsOpened={isOptionsOpened} onOptionsFormClick={onOptionsFormClick} />}
-              <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} setActiveCardId={setActiveCardId} />
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">{offersNumber > 0 && <Map offers={offers} activeCardId={activeCardId} />}</section>
-            </div>
-          </div>
+          {offers.length === 0 && isDataLoaded ?
+            <MainEmptyItem city={city} />
+            :
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                {isDataLoaded ? <b className="places__found">{offersNumber} places to stay in {city}</b> : <SpinnerScreen />}
+                {offers.length > 0 && <SortingOptions option={option} onOptionClick={onOptionClick} isOptionsOpened={isOptionsOpened} onOptionsFormClick={onOptionsFormClick} />}
+                <PlacesList cardName={CardName.CITIES} className={`cities__places-list tabs__content`} offers={offers} setActiveCardId={setActiveCardId} />
+              </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">{offersNumber > 0 && <Map offers={offers} activeCardId={activeCardId} />}</section>
+              </div>
+            </div>}
         </div>
       </main>
     </div>

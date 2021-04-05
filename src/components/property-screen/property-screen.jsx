@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link, useParams, useHistory} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewsForm from '../reviews-form/reviews-form';
 import ReviewsList from '../reviews-list/reviews-list';
@@ -8,12 +8,11 @@ import PlacesList from '../places-list/places-list';
 import SpinnerScreen from '../spinner-screen/spinner-screen';
 import {IMAGES_NUMBER, HousingType, CardName, AuthorizationStatus, createStarsNumber, AppRoute} from '../../const';
 import Map from '../map/map';
-import {fetchHotelId, fetchHotelsNearbyHotelId} from "../../store/api-actions";
+import {fetchHotelId, fetchHotelsNearbyHotelId, favoriteHotelPost} from "../../store/api-actions";
 
 const PropertyScreen = (props) => {
-  const history = useHistory();
   const {id} = useParams();
-  const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo} = props;
+  const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo, onFavoriteHotelClick} = props;
 
   useEffect(() => {
     if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
@@ -25,7 +24,7 @@ const PropertyScreen = (props) => {
     if (id !== offer.id && offer.id !== undefined) {
       onLoadData(id);
     }
-  }, [id]);
+  }, [id, offer.isFavorite]);
 
   if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
     return (
@@ -35,6 +34,12 @@ const PropertyScreen = (props) => {
 
   const totalOffers = nearbyOffers.slice();
   totalOffers.unshift(offer);
+
+  const handleFavoriteHotelClick = (evt) => {
+    evt.preventDefault();
+
+    onFavoriteHotelClick(id, offer.isFavorite ? 0 : 1);
+  };
 
   return (
     <div className="page">
@@ -86,7 +91,7 @@ const PropertyScreen = (props) => {
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className={`${offer.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`}`} type="button" onClick={() => history.push(`/favorites`)}>
+                <button className={`${offer.isFavorite ? `property__bookmark-button property__bookmark-button--active button` : `property__bookmark-button button`}`} type="button" onClick={handleFavoriteHotelClick}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -172,13 +177,12 @@ PropertyScreen.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   authInfo: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  onFavoriteHotelClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  //  city: state.city,
   offer: state.offer,
   nearbyOffers: state.nearbyOffers,
-  //  isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
   authInfo: state.authInfo,
 });
@@ -187,6 +191,9 @@ const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
     dispatch(fetchHotelId(id));
     dispatch(fetchHotelsNearbyHotelId(id));
+  },
+  onFavoriteHotelClick(id, status) {
+    dispatch(favoriteHotelPost(id, status));
   },
 });
 
