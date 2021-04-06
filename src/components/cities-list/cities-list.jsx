@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CITIES} from '../../const';
+import {City} from '../../const';
 
 const CitiesList = (props) => {
   const {city, onCityClick} = props;
 
   return (
     <ul className="locations__list tabs__list">
-      {Object.values(CITIES).map((cityName) => {
+      {Object.values(City).map((cityName) => {
         return (
           <li key={cityName} className="locations__item"
             onClick={(evt) => {

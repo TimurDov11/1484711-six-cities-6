@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStarsNumber, getDateTime, getDate} from '../../const';
+import {getDateTime, getDate, createStarsNumber} from '../../utils';
 import reviewsItemProp from './reviews-item.prop';
 
 const ReviewsItem = (props) => {

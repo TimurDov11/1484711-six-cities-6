@@ -8,13 +8,13 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
-import {AuthorizationStatus} from "./const";
+import {AuthorizationStatus, APIRoute} from "./const";
 import {checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middlewares/redirect";
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
-    () => store.dispatch(ActionCreator.redirectToRoute(`/404`))
+    () => store.dispatch(ActionCreator.redirectToRoute(APIRoute.NOT_FOUND))
 );
 
 const store = createStore(

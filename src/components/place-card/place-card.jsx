@@ -2,12 +2,14 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 import {favoriteHotelPost} from "../../store/api-actions";
+import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
-import {HousingType, CardName, createStarsNumber} from '../../const';
+import {HousingType, CardName} from '../../const';
+import {createStarsNumber} from '../../utils';
 import placeCardProp from './place-card.prop';
 
 const PlaceCard = (props) => {
-  const {cardName, offer, setActiveCardId, onFavoriteHotelClick} = props;
+  const {cardName, offer, setActiveCardId, onFavoriteHotelClick, onPlaceCardBookmarkButtonClick} = props;
   const {id, isPremium, previewPhoto, price, isFavorite, rating, title, type} = offer;
 
   const CardSettings = {
@@ -24,7 +26,8 @@ const PlaceCard = (props) => {
   const handleFavoriteHotelClick = (evt) => {
     evt.preventDefault();
 
-    onFavoriteHotelClick(id, isFavorite ? 0 : 1);
+    onFavoriteHotelClick(id, isFavorite ? 0 : 1)
+    .then((data) => onPlaceCardBookmarkButtonClick(data));
   };
 
   return (
@@ -81,11 +84,15 @@ PlaceCard.propTypes = {
   offer: placeCardProp,
   setActiveCardId: PropTypes.func.isRequired,
   onFavoriteHotelClick: PropTypes.func.isRequired,
+  onPlaceCardBookmarkButtonClick: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onFavoriteHotelClick(id, status) {
-    dispatch(favoriteHotelPost(id, status));
+    return dispatch(favoriteHotelPost(id, status));
+  },
+  onPlaceCardBookmarkButtonClick(data) {
+    dispatch(ActionCreator.toggleHotelFavoriteState(data));
   },
 });
 

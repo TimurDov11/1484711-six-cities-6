@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {SORTING_OPTIONS} from '../../const';
+import {SortingOption} from '../../const';
 
 const SortingOptions = (props) => {
   const {option, onOptionClick, isOptionsOpened, onOptionsFormClick} = props;
@@ -20,7 +20,7 @@ const SortingOptions = (props) => {
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isOptionsOpened ? `places__options--opened` : ``}`}>
-        {Object.values(SORTING_OPTIONS).map((optionName) => {
+        {Object.values(SortingOption).map((optionName) => {
           return (
             <li key={optionName} className={`places__option ${option === optionName && `places__option--active`}`} tabIndex="0"
               onClick={(evt) => {

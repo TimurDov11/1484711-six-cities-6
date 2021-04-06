@@ -13,6 +13,7 @@ export const ActionType = {
   TOGGLE_SUBMIT_STATE: `toggleSubmitState`,
   TOGGLE_MISTAKE_STATE: `toggleMistakeState`,
   TOGGLE_HOTEL_FAVORITE_STATE: `toggleHotelFavoriteState`,
+  TOGGLE_HOTEL_FAVORITE_STATE__ID: `toggleHotelFavoriteStateId`,
   LOAD_FAVORITE_HOTELS: `data/loadFavoriteHotels`,
 };
 
@@ -70,6 +71,10 @@ export const ActionCreator = {
   }),
   toggleHotelFavoriteState: (hotel) => ({
     type: ActionType.TOGGLE_HOTEL_FAVORITE_STATE,
+    payload: hotel,
+  }),
+  toggleHotelFavoriteStateId: (hotel) => ({
+    type: ActionType.TOGGLE_HOTEL_FAVORITE_STATE__ID,
     payload: hotel,
   }),
   loadFavoriteHotels: (hotels) => ({

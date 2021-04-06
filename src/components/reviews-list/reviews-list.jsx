@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ReviewsItem from '../reviews-item/reviews-item';
-import {MAX_REVIEWS_NUMBER, sortReviewsDate} from '../../const';
+import {MAX_REVIEWS_NUMBER} from '../../const';
+import {sortReviewsDate} from '../../utils';
 import {fetchCommentsHotelId} from "../../store/api-actions";
 
 const ReviewsList = (props) => {

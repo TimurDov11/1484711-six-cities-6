@@ -6,13 +6,15 @@ import ReviewsForm from '../reviews-form/reviews-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import PlacesList from '../places-list/places-list';
 import SpinnerScreen from '../spinner-screen/spinner-screen';
-import {IMAGES_NUMBER, HousingType, CardName, AuthorizationStatus, createStarsNumber, AppRoute} from '../../const';
+import {IMAGES_NUMBER, HousingType, CardName, AuthorizationStatus, AppRoute} from '../../const';
+import {createStarsNumber} from '../../utils';
 import Map from '../map/map';
 import {fetchHotelId, fetchHotelsNearbyHotelId, favoriteHotelPost} from "../../store/api-actions";
+import {ActionCreator} from '../../store/action';
 
 const PropertyScreen = (props) => {
   const {id} = useParams();
-  const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo, onFavoriteHotelClick} = props;
+  const {offer, nearbyOffers, onLoadData, authorizationStatus, authInfo, onFavoriteHotelClick, onPropertyBookmarkButtonClick} = props;
 
   useEffect(() => {
     if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
@@ -24,7 +26,7 @@ const PropertyScreen = (props) => {
     if (id !== offer.id && offer.id !== undefined) {
       onLoadData(id);
     }
-  }, [id, offer.isFavorite]);
+  }, [id]);
 
   if (Object.entries(offer).length === 0 || nearbyOffers.length === 0) {
     return (
@@ -38,7 +40,8 @@ const PropertyScreen = (props) => {
   const handleFavoriteHotelClick = (evt) => {
     evt.preventDefault();
 
-    onFavoriteHotelClick(id, offer.isFavorite ? 0 : 1);
+    onFavoriteHotelClick(id, offer.isFavorite ? 0 : 1)
+    .then((data) => onPropertyBookmarkButtonClick(data));
   };
 
   return (
@@ -178,6 +181,7 @@ PropertyScreen.propTypes = {
   authInfo: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onFavoriteHotelClick: PropTypes.func.isRequired,
+  onPropertyBookmarkButtonClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -193,7 +197,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchHotelsNearbyHotelId(id));
   },
   onFavoriteHotelClick(id, status) {
-    dispatch(favoriteHotelPost(id, status));
+    return dispatch(favoriteHotelPost(id, status));
+  },
+  onPropertyBookmarkButtonClick(data) {
+    dispatch(ActionCreator.toggleHotelFavoriteStateId(data));
   },
 });
 

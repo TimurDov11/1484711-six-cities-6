@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {HousingType, createStarsNumber} from '../../const';
+import {HousingType} from '../../const';
+import {createStarsNumber} from '../../utils';
 import {favoriteHotelPost} from "../../store/api-actions";
 import favoritePlaceCardProp from './favorite-place-card.prop';
 import PropTypes from 'prop-types';

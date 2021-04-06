@@ -1,14 +1,15 @@
 import {ActionType} from './action';
-import {CITIES, SORTING_OPTIONS, AuthorizationStatus, updateData} from '../const';
+import {City, SortingOption, AuthorizationStatus} from '../const';
+import {updateData} from '../utils';
 
 const initialState = {
-  city: CITIES.PARIS,
+  city: City.PARIS,
   offers: [],
   favoriteOffers: [],
   offer: {},
   reviews: [],
   nearbyOffers: [],
-  option: SORTING_OPTIONS.POPULAR,
+  option: SortingOption.POPULAR,
   isOptionsOpened: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
@@ -25,7 +26,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
-        option: SORTING_OPTIONS.POPULAR,
+        option: SortingOption.POPULAR,
       };
 
     case ActionType.CHANGE_OPTION:
@@ -99,8 +100,15 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: updateData(state.offers, action.payload),
+        nearbyOffers: updateData(state.nearbyOffers, action.payload),
+        isFavoriteOffersLoaded: false
+      };
+
+    case ActionType.TOGGLE_HOTEL_FAVORITE_STATE__ID:
+      return {
+        ...state,
         offer: action.payload,
-        isFavoriteOffersLoaded: false,
+        isFavoriteOffersLoaded: false
       };
 
     case ActionType.LOAD_FAVORITE_HOTELS:
