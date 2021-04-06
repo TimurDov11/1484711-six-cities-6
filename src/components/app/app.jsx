@@ -12,7 +12,6 @@ import {AppRoute} from '../../const';
 
 const App = () => {
 
-
   return (
     <Router history={browserHistory}>
       <Switch>
