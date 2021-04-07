@@ -4,9 +4,9 @@ export const createStarsNumber = (rating) => {
   return Math.round(rating) * 100 / 5;
 };
 
-export const sortReviewsDate = (ReviewA, ReviewB) => {
-  const previousReview = new Date(ReviewA.date);
-  const lastReview = new Date(ReviewB.date);
+export const sortReviewsDate = (reviewA, reviewB) => {
+  const previousReview = new Date(reviewA.date);
+  const lastReview = new Date(reviewB.date);
 
   return lastReview - previousReview;
 };

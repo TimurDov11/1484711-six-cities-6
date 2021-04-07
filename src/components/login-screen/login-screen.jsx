@@ -3,11 +3,26 @@ import {Link, Redirect} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import {ActionCreator} from '../../store/action';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
-const LoginScreen = ({city, onSubmit, authorizationStatus}) => {
+const LoginScreen = ({city, onSubmit, authorizationStatus, isLoginFormSubmitDisabled, onFormSubmitActivate}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
+
+  const handleLoginChange = (evt) => {
+    evt.preventDefault();
+
+    const REG_EXP = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!REG_EXP.test(loginRef.current.value)) {
+      onFormSubmitActivate(true);
+    }
+
+    if (REG_EXP.test(loginRef.current.value)) {
+      onFormSubmitActivate(false);
+    }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -53,13 +68,13 @@ const LoginScreen = ({city, onSubmit, authorizationStatus}) => {
               <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">E-mail</label>
-                  <input ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email" required="" />
+                  <input ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email" required="" onChange={handleLoginChange} />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">Password</label>
                   <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required="" />
                 </div>
-                <button className="login__submit form__submit button" type="submit">Sign in</button>
+                <button className="login__submit form__submit button" type="submit" disabled={isLoginFormSubmitDisabled}>Sign in</button>
               </form>
             </section>
             <section className="locations locations--login locations--current">
@@ -79,17 +94,23 @@ LoginScreen.propTypes = {
   city: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  isLoginFormSubmitDisabled: PropTypes.bool.isRequired,
+  onFormSubmitActivate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
   authorizationStatus: state.authorizationStatus,
+  isLoginFormSubmitDisabled: state.isLoginFormSubmitDisabled,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
-    dispatch(login(authData));
-  }
+    return dispatch(login(authData));
+  },
+  onFormSubmitActivate(boolean) {
+    dispatch(ActionCreator.toggleLoginSubmitState(boolean));
+  },
 });
 
 export {LoginScreen};

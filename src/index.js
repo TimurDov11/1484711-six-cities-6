@@ -14,7 +14,8 @@ import {redirect} from "./store/middlewares/redirect";
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
-    () => store.dispatch(ActionCreator.redirectToRoute(APIRoute.NOT_FOUND))
+    () => store.dispatch(ActionCreator.redirectToRoute(APIRoute.NOT_FOUND)),
+    () => store.dispatch(ActionCreator.toggleServerAvailability()),
 );
 
 const store = createStore(

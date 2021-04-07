@@ -15,6 +15,8 @@ export const ActionType = {
   TOGGLE_HOTEL_FAVORITE_STATE: `toggleHotelFavoriteState`,
   TOGGLE_HOTEL_FAVORITE_STATE__ID: `toggleHotelFavoriteStateId`,
   LOAD_FAVORITE_HOTELS: `data/loadFavoriteHotels`,
+  TOGGLE_SERVER_AVAILABILITY: `toggleServerAvailability`,
+  TOGGLE_LOGIN_SUBMIT_STATE: `toggleLoginSubmitState`,
 };
 
 export const ActionCreator = {
@@ -80,5 +82,12 @@ export const ActionCreator = {
   loadFavoriteHotels: (hotels) => ({
     type: ActionType.LOAD_FAVORITE_HOTELS,
     payload: hotels,
+  }),
+  toggleServerAvailability: () => ({
+    type: ActionType.TOGGLE_SERVER_AVAILABILITY,
+  }),
+  toggleLoginSubmitState: (boolean) => ({
+    type: ActionType.TOGGLE_LOGIN_SUBMIT_STATE,
+    payload: boolean,
   }),
 };

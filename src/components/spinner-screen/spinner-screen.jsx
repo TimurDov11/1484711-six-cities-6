@@ -1,9 +1,23 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-const SpinnerScreen = () => {
+const SpinnerScreen = ({isServerAvailable}) => {
+
   return (
-    <p>Loading ...</p>
+    <>
+      {isServerAvailable ? <p>Loading ...</p> : <p>Server is not available</p>}
+    </>
   );
 };
 
-export default SpinnerScreen;
+SpinnerScreen.propTypes = {
+  isServerAvailable: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isServerAvailable: state.isServerAvailable,
+});
+
+export {SpinnerScreen};
+export default connect(mapStateToProps, null)(SpinnerScreen);

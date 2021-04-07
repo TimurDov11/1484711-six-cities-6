@@ -18,6 +18,8 @@ const initialState = {
   commentPost: {},
   isReviewsFormSubmitDisabled: true,
   isReviewsFormHasMistake: false,
+  isServerAvailable: true,
+  isLoginFormSubmitDisabled: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -116,6 +118,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         favoriteOffers: action.payload,
         isFavoriteOffersLoaded: true
+      };
+
+    case ActionType.TOGGLE_SERVER_AVAILABILITY:
+      return {
+        ...state,
+        isServerAvailable: false
+      };
+
+    case ActionType.TOGGLE_LOGIN_SUBMIT_STATE:
+      return {
+        ...state,
+        isLoginFormSubmitDisabled: action.payload
       };
 
     default:
