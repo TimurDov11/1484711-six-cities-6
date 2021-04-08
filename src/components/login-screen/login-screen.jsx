@@ -30,6 +30,9 @@ const LoginScreen = ({city, onSubmit, authorizationStatus, isLoginFormSubmitDisa
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value,
+    })
+    .catch(() => {
+      loginRef.current.value = `invalid login`;
     });
   };
 
